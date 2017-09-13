@@ -3,14 +3,21 @@ using System.IO;
 
 namespace test
 {
-    internal partial class Program
+    public class Utilities
     {
-        public class Utilities
+        public static string GetUserProfile()
         {
-            public static string GetUserProfile()
+            return Path.GetFileName(Environment.GetEnvironmentVariable("USERPROFILE"));
+        }
+        public static void WaitUserInput()
+        {
+            do
             {
-                return Path.GetFileName(Environment.GetEnvironmentVariable("USERPROFILE"));
-            }
+                while (!Console.KeyAvailable)
+                {
+
+                }
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
     }
 }

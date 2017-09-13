@@ -1,18 +1,23 @@
 ﻿using System;
+using static test.Utilities;
+using static test.CSharpSeven;
 
 namespace test
 {
-    internal partial class Program
+    internal class Program
     {
         private static void Main()
         {
-            Console.WriteLine(Utilities.GetUserProfile()); do
-            {
-                while (!Console.KeyAvailable)
-                {
+            #region CSharpSeven
+            BinaryLiterals();
+            LocalFunctions();
+            LocalFunctionsTwo();
+            #endregion
 
-                }
-            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+            #region Utilities
+            Console.WriteLine(GetUserProfile());
+            WaitUserInput();
+            #endregion
         }
     }
 }
