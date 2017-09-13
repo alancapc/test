@@ -7,10 +7,6 @@ namespace test
     {
         public class Utilities
         {
-            public Utilities()
-            {
-            }
-
             public static string GetUserProfile()
             {
                 return Path.GetFileName(Environment.GetEnvironmentVariable("USERPROFILE"));
