@@ -8,16 +8,25 @@ namespace test
     {
         private static void Main()
         {
-            #region CSharpSeven
-            BinaryLiterals();
-            LocalFunctions();
-            LocalFunctionsTwo();
-            #endregion
+            void CSharpSevenExample()
+            {
+                BinaryLiterals();
+                LocalFunctions();
+                LocalFunctionsTwo();
+            }
 
-            #region Utilities
-            Console.WriteLine(GetUserProfile());
-            WaitUserInput();
-            #endregion
+            void UtilitiesExample()
+            {
+                Console.WriteLine(GetUserProfile());
+            }
+
+            void ConsoleLogThis()
+            {
+                UtilitiesExample();
+                WaitUserInput();
+            }
+
+            ConsoleLogThis();
         }
     }
 }
