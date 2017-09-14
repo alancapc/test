@@ -14,10 +14,7 @@ namespace test
             Console.WriteLine($"Pres any key to leave...");
             do
             {
-                while (!Console.KeyAvailable)
-                {
-
-                }
+                while (!Console.KeyAvailable) { }
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
     }
