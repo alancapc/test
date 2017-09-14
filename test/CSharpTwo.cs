@@ -6,12 +6,12 @@ namespace test
     {
         public static void IteratorEvenNumbers(int first, int last)
         {
-            foreach (int number in EvenSequence(first, last))
+            foreach (int number in EvenSequenceIterator(first, last))
                 Console.Write(number + " ");
             Console.ReadKey();
 
             System.Collections.Generic.IEnumerable<int>
-            EvenSequence(int firstNumber, int lastNumber)
+            EvenSequenceIterator(int firstNumber, int lastNumber)
             {
                 // Yield even numbers in the range.  
                 for (int number = firstNumber; number <= lastNumber; number++)
