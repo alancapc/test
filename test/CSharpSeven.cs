@@ -59,13 +59,26 @@ namespace test
 
         public static void TupleValueTupleReturn()
         {
+            var result = ReturnTuple();
+
             (int sum, int count) ReturnTuple()
             {
                 return (1, 2);
             }
 
-            var result = ReturnTuple();
-            Console.WriteLine($"result.sum: {result.sum} \nresult.count: {result.count} \nresult: {result}");
+            Console.WriteLine($"result.sum: {result.sum}\n" +
+                              $"result.count: {result.count}\n" +
+                              $"result: {result}");
+        }
+
+        public static void TupleDemo()
+        {
+            var tupleSample = new TupleSamples();
+            var person = tupleSample.GetNewTuple();
+            Console.WriteLine($"C# 7 Tuple - Author " +
+                              $"{person.Item1} " +
+                              $"{person.Item2} " +
+                              $"{person.Item3}");
         }
     }
 }

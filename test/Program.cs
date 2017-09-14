@@ -24,19 +24,19 @@ namespace test
                 LocalFunctions();
                 LocalFunctionsRecursion();
                 TupleValueTupleReturn();
+                TupleDemo();
             }
             void ConsoleLogThis()
             {
                 UtilitiesExamples();
                 CSharpTwoExamples();
-                CSharpSevenExamples();
                 Console.Clear();
+                CSharpSevenExamples();
 
                 WaitUserInput();
             }
-
+            
             ConsoleLogThis();
         }
     }
 }
-;
