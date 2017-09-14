@@ -32,12 +32,10 @@ namespace test
             {
                 UtilitiesExamples();
                 CSharpTwoExamples();
-                Console.Clear();
                 CSharpSevenExamples();
-
+                Console.Clear();
                 WaitUserInput();
             }
-            
             ConsoleLogThis();
         }
     }
