@@ -6,9 +6,9 @@ namespace test
     {
         public class DaysOfTheWeek : IEnumerable
         {
-            private string[] days = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+            private readonly string[] _days = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
-            public IEnumerator GetEnumerator() => days.GetEnumerator();
+            public IEnumerator GetEnumerator() => _days.GetEnumerator();
         }
     }
 }
