@@ -11,6 +11,7 @@ namespace test
         }
         public static void WaitUserInput()
         {
+            Console.WriteLine($"Pres any key to leave...");
             do
             {
                 while (!Console.KeyAvailable)

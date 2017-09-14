@@ -9,6 +9,10 @@ namespace test
     {
         private static void Main()
         {
+            void UtilitiesExamples()
+            {
+                Console.WriteLine(GetUserProfile());
+            }
             void CSharpTwoExamples()
             {
                 IteratorEvenNumbers(1, 10);
@@ -21,16 +25,12 @@ namespace test
                 LocalFunctionsRecursion();
                 TupleValueTupleReturn();
             }
-            void UtilitiesExamples()
-            {
-                Console.WriteLine(GetUserProfile());
-            }
             void ConsoleLogThis()
             {
-                CSharpTwoExamples();
                 UtilitiesExamples();
-                Console.Clear();
+                CSharpTwoExamples();
                 CSharpSevenExamples();
+                Console.Clear();
 
                 WaitUserInput();
             }
