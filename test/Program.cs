@@ -12,7 +12,7 @@ namespace test
             {
                 BinaryLiterals();
                 LocalFunctions();
-                LocalFunctionsTwo();
+                LocalFunctionsRecursion();
             }
 
             void UtilitiesExample()

@@ -31,7 +31,7 @@ namespace test
             Console.WriteLine($"total of 10 + {start} = " + AddTen(start));
         }
 
-        public static void LocalFunctionsTwo()
+        public static void LocalFunctionsRecursion()
         {
             int myValue = 1;
             int Calc(int number) => (number < 2) ? myValue : Calc(number - 1) + Calc(number - 2);
