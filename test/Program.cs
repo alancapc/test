@@ -19,6 +19,7 @@ namespace test
                 BinaryLiterals();
                 LocalFunctions();
                 LocalFunctionsRecursion();
+                TupleValueTupleReturn();
             }
             void UtilitiesExamples()
             {
@@ -27,9 +28,9 @@ namespace test
             void ConsoleLogThis()
             {
                 CSharpTwoExamples();
-                CSharpSevenExamples();
                 UtilitiesExamples();
                 Console.Clear();
+                CSharpSevenExamples();
 
                 WaitUserInput();
             }

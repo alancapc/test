@@ -8,13 +8,11 @@ namespace test.CSharpTwo
         {
             foreach (int number in EvenSequenceIterator(first, last))
                 Console.Write(number + " ");
-            Console.ReadKey();
 
             System.Collections.Generic.IEnumerable<int>
             EvenSequenceIterator(int firstNumber, int lastNumber)
             {
-                // Yield even numbers in the range.  
-                for (int number = firstNumber; number <= lastNumber; number++)
+                for (var number = firstNumber; number <= lastNumber; number++)
                 {
                     if (number % 2 == 0)
                         yield return number;
@@ -29,8 +27,6 @@ namespace test.CSharpTwo
             {
                 Console.Write(day + " ");
             }
-            // Output: Sun Mon Tue Wed Thu Fri Sat  
-            Console.ReadKey();
         }
     }
 }

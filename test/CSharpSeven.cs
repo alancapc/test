@@ -56,6 +56,17 @@ namespace test
                 }
             }
         }
+
+        public static void TupleValueTupleReturn()
+        {
+            (int sum, int count) ReturnTuple()
+            {
+                return (1, 2);
+            }
+
+            var result = ReturnTuple();
+            Console.WriteLine($"result.sum: {result.sum} \nresult.count: {result.count} \nresult: {result}");
+        }
     }
 }
 ;
