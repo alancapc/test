@@ -1,7 +1,7 @@
 ﻿using System;
 using static test.Utilities;
 using static test.CSharpSeven;
-using static test.CSharpTwo;
+using static test.CSharpTwo.CSharpTwo;
 
 namespace test
 {

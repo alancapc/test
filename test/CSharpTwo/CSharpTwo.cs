@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace test
+namespace test.CSharpTwo
 {
-    public partial class CSharpTwo
+    public class CSharpTwo
     {
         public static void IteratorEvenNumbers(int first, int last)
         {
@@ -21,7 +21,6 @@ namespace test
                 }
             }
         }
-
         public static void IteratorDaysOfTheWeek()
         {
             var days = new DaysOfTheWeek();
