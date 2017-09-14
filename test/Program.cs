@@ -12,6 +12,7 @@ namespace test
             void CSharpTwoExamples()
             {
                 IteratorEvenNumbers(1, 10);
+                IteratorDaysOfTheWeek();
             }
             void CSharpSevenExamples()
             {

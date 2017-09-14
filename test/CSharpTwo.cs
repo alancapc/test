@@ -2,7 +2,7 @@
 
 namespace test
 {
-    public class CSharpTwo
+    public partial class CSharpTwo
     {
         public static void IteratorEvenNumbers(int first, int last)
         {
@@ -20,6 +20,18 @@ namespace test
                         yield return number;
                 }
             }
+        }
+
+        public static void IteratorDaysOfTheWeek()
+        {
+            var days = new DaysOfTheWeek();
+
+            foreach (string day in days)
+            {
+                Console.Write(day + " ");
+            }
+            // Output: Sun Mon Tue Wed Thu Fri Sat  
+            Console.ReadKey();
         }
     }
 }
