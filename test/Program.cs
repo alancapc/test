@@ -1,6 +1,7 @@
 ﻿using System;
 using static test.Utilities;
 using static test.CSharpSeven;
+using static test.CSharpTwo;
 
 namespace test
 {
@@ -8,24 +9,27 @@ namespace test
     {
         private static void Main()
         {
-            void CSharpSevenExample()
+            void CSharpTwoExamples()
+            {
+                IteratorEvenNumbers(1, 10);
+            }
+            void CSharpSevenExamples()
             {
                 BinaryLiterals();
                 LocalFunctions();
-                LocalFunctionsRecursion(); 
+                LocalFunctionsRecursion();
             }
-
-            void UtilitiesExample()
+            void UtilitiesExamples()
             {
                 Console.WriteLine(GetUserProfile());
             }
-
             void ConsoleLogThis()
             {
-                CSharpSevenExample();
+                CSharpTwoExamples();
+                CSharpSevenExamples();
+                UtilitiesExamples();
                 Console.Clear();
 
-                UtilitiesExample();
                 WaitUserInput();
             }
 
