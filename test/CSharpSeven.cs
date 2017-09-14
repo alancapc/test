@@ -76,9 +76,26 @@ namespace test
             var tupleSample = new TupleSamples();
             var person = tupleSample.GetNewTuple();
             Console.WriteLine($"C# 7 Tuple - Author " +
-                              $"{person.Item1} " +
-                              $"{person.Item2} " +
-                              $"{person.Item3}");
+                              $"{person.name} " +
+                              $"{person.title} " +
+                              $"{person.year}");
+        }
+
+        public static void DeconstructorTuple()
+        {
+            var tupleSample = new TupleSamples();
+            var(authorName, bookTitle, pubYear) = tupleSample.GetNewTuple();
+
+            Console.WriteLine($"Author: {authorName} \nBook: {bookTitle} Year: {pubYear}");
+            
+        }
+
+        public static void Deconstructor()
+        {
+            Programmer programmer = new Programmer("Alan", "Costa");
+            var(firstName, lastName) = programmer;
+            Console.WriteLine(firstName);
+            Console.WriteLine(lastName);
         }
     }
 }

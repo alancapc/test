@@ -25,6 +25,8 @@ namespace test
                 LocalFunctionsRecursion();
                 TupleValueTupleReturn();
                 TupleDemo();
+                DeconstructorTuple();
+                Deconstructor();
             }
             void ConsoleLogThis()
             {

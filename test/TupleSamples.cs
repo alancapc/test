@@ -2,9 +2,9 @@
 {
     internal class TupleSamples
     {
-        public (string name, string title, long year) GetNewTuple() => (
-            name: "Alan Costa", 
-            title: "Tuple Sample", 
-            year: 2017);
+        public (string name, string title, long year) GetNewTuple()
+        {
+            return (name: "Alan Costa", title: ".NET Programming", year: 2017);
+        }
     }
 }
