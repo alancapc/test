@@ -22,6 +22,9 @@ namespace test
 
             void ConsoleLogThis()
             {
+                CSharpSevenExample();
+                Console.Clear();
+
                 UtilitiesExample();
                 WaitUserInput();
             }
