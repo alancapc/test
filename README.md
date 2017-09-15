@@ -1,4 +1,7 @@
-# test 
+[![Build status](https://ci.appveyor.com/api/projects/status/ep214ao2v0x2v9x7/branch/master?svg=true)](https://ci.appveyor.com/project/alancapc/test/branch/master) 
+[![GitHub issues](https://img.shields.io/github/issues/alancapc/test.svg)](https://github.com/alancapc/test/issues)
+
+# Test project
 
 Lightweight test project to quickly evaluate C# Language features, libraries, patterns, architecture, packages, 
 builds, deployments, multiple configurations, source control, debugging, project nesting, etc.
