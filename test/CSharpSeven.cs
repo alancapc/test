@@ -75,7 +75,7 @@ namespace test
         {
             var tupleSample = new TupleSamples();
             var person = tupleSample.GetNewTuple();
-            Console.WriteLine($"C# 7 Tuple - Author " +
+            Console.WriteLine("C# 7 Tuple - Author " +
                               $"{person.name} " +
                               $"{person.title} " +
                               $"{person.year}");
