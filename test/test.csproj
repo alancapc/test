@@ -8,6 +8,12 @@
     <Description>test project</Description>
     <Copyright>MIT</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile />
+    <RepositoryUrl>https://github.com/alancapc/test</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <StartupObject>test.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
