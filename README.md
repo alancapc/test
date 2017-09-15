@@ -1,6 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ep214ao2v0x2v9x7/branch/master?svg=true)](https://ci.appveyor.com/project/alancapc/test/branch/master) 
 [![GitHub issues](https://img.shields.io/github/issues/alancapc/test.svg)](https://github.com/alancapc/test/issues)
-(https://github.com/alancapc/test/tags)
 
 # Test project
 
