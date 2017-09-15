@@ -33,7 +33,7 @@ namespace test
 
         public static void LocalFunctionsRecursion()
         {
-            int myValue = 1;
+            var myValue = 1;
             int Calc(int number) => (number < 2) ? myValue : Calc(number - 1) + Calc(number - 2);
             Console.WriteLine(Calc(8));
         }
@@ -92,7 +92,7 @@ namespace test
 
         public static void Deconstructor()
         {
-            Programmer programmer = new Programmer("Alan", "Costa");
+            var programmer = new Programmer("Alan", "Costa");
             var(firstName, lastName) = programmer;
             Console.WriteLine(firstName);
             Console.WriteLine(lastName);
