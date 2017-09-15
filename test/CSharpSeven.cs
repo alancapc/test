@@ -57,7 +57,7 @@ namespace test
             }
         }
 
-        public static vod TupleValueTupleReturn()
+        public static void TupleValueTupleReturn()
         {
             var result = ReturnTuple();
 
