@@ -12,6 +12,7 @@ namespace test
             void UtilitiesExamples()
             {
                 Console.WriteLine(GetUserProfile());
+                Console.WriteLine($"\"{DateTime.Now}\"");
             }
             void CSharpTwoExamples()
             {
@@ -30,11 +31,11 @@ namespace test
             }
             void ConsoleLogThis()
             {
-                UtilitiesExamples();
+                CSharpSevenExamples();
                 CSharpTwoExamples();
                 Console.Clear();
 
-                CSharpSevenExamples();
+                UtilitiesExamples();
                 WaitUserInput();
             }
             ConsoleLogThis();
