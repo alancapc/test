@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace test
+namespace test.Utilities
 {
     public class Utilities
     {

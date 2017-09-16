@@ -1,14 +1,14 @@
 ﻿using System;
-using static test.Utilities;
-using static test.CSharpSeven;
+using static test.Utilities.Utilities;
 using static test.CSharpTwo.CSharpTwo;
-
+using static test.CSharpSeven.CSharpSeven;
 namespace test
 {
     internal class Program
     {
         private static void Main()
         {
+            #region ClassesExamples
             void UtilitiesExamples()
             {
                 Console.WriteLine(GetUserProfile());
@@ -19,8 +19,10 @@ namespace test
                 IteratorEvenNumbers(1, 10);
                 IteratorDaysOfTheWeek();
             }
+            #endregion
             void CSharpSevenExamples()
             {
+                #region Passed
                 BinaryLiterals();
                 LocalFunctions();
                 LocalFunctionsRecursion();
@@ -28,14 +30,18 @@ namespace test
                 TupleDemo();
                 DeconstructorTuple();
                 Deconstructor();
+                #endregion
+                IsExpressionsWithPatterns();
             }
             void ConsoleLogThis()
             {
-                CSharpSevenExamples();
+                #region Cleared
+                UtilitiesExamples();
                 CSharpTwoExamples();
                 Console.Clear();
+                #endregion
+                CSharpSevenExamples();
 
-                UtilitiesExamples();
                 WaitUserInput();
             }
             ConsoleLogThis();
