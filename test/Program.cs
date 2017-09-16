@@ -7,7 +7,7 @@ namespace test
 {
     internal class Program
     {
-        private static void Min()
+        private static void Main()
         {
             void UtilitiesExamples()
             {
