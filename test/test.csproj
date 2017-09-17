@@ -7,7 +7,7 @@
     <Authors>devs</Authors>
     <Description>test project</Description>
     <Copyright>MIT</Copyright>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile />
