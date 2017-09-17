@@ -1,4 +1,4 @@
-﻿namespace test
+﻿namespace test.CSharpSeven
 {
     public class Performer
     {

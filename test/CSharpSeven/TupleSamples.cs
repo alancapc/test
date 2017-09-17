@@ -1,4 +1,4 @@
-﻿namespace test
+﻿namespace test.CSharpSeven
 {
     internal class TupleSamples
     {
