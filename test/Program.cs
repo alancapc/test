@@ -2,6 +2,8 @@
 using static test.Utilities.Utilities;
 using static test.CSharpTwo.CSharpTwo;
 using static test.CSharpSeven.CSharpSeven;
+using static test.DataAccess.DataAccess;
+
 namespace test
 {
     internal class Program
@@ -40,10 +42,10 @@ namespace test
                 #region Cleared
                 UtilitiesExamples();
                 CSharpTwoExamples();
+                CSharpSevenExamples();
                 Console.Clear();
                 #endregion
-                CSharpSevenExamples();
-
+                AddBlogToDb();
                 WaitUserInput();
             }
             ConsoleLogThis();
