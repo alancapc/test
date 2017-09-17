@@ -132,7 +132,6 @@ namespace test.CSharpSeven
 
             }
         }
-
         public static void RefReturns()
         {
             TestRefOutput();
@@ -146,7 +145,7 @@ namespace test.CSharpSeven
 
                 void AddByRef(long firstNumber, long secondNumber, ref long totalPointer)
                 {
-                    if (totalPointer <= 0) throw new ArgumentOutOfRangeException(nameof(totalPointer));
+                    if (totalPointer <= -1) throw new ArgumentOutOfRangeException(nameof(totalPointer));
                     totalPointer = firstNumber + secondNumber;
                 }
             }
@@ -166,6 +165,18 @@ namespace test.CSharpSeven
             if (names.Length > 0)
                 return ref names[index];
             throw new IndexOutOfRangeException($"{nameof(index)} not found.");
+        }
+
+        public static void OutVariable()
+        {
+            CreateName(out var newForename, out var newSurname);
+            void CreateName(out string firstName, out string secondName)
+            {
+                firstName = "Alan";
+                secondName = "Costa";
+            }
+
+            Console.WriteLine($"What's up {newForename} {newSurname}");
         }
     }
 }

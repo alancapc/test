@@ -31,8 +31,9 @@ namespace test
                 DeconstructorTuple();
                 Deconstructor();
                 IsExpressionsWithPatterns();
-                #endregion
                 RefReturns();
+                OutVariable();
+                #endregion
             }
             void ConsoleLogThis()
             {
