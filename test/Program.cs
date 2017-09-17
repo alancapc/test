@@ -45,7 +45,7 @@ namespace test
                 CSharpSevenExamples();
                 Console.Clear();
                 #endregion
-                AddBlogToDb();
+                AddBlogToDb( );
                 WaitUserInput();
             }
             ConsoleLogThis();
