@@ -146,6 +146,7 @@ namespace test.CSharpSeven
 
                 void AddByRef(long firstNumber, long secondNumber, ref long totalPointer)
                 {
+                    if (totalPointer <= 0) throw new ArgumentOutOfRangeException(nameof(totalPointer));
                     totalPointer = firstNumber + secondNumber;
                 }
             }
