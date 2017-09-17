@@ -31,7 +31,7 @@ namespace test.CSharpSeven
         }
         public static void LocalFunctionsRecursion()
         {
-            var myValue = 1;
+            const int myValue = 1;
             int Calc(int number) => (number < 2) ? myValue : Calc(number - 1) + Calc(number - 2);
             Console.WriteLine(Calc(8));
         }
@@ -92,25 +92,44 @@ namespace test.CSharpSeven
         }
         public static void IsExpressionsWithPatterns()
         {
-            var performer = new Performer();
-            var actor = new Actor("Eddie Murphy", 54, "Male", "Coming to America", 2017);
-            var musician = new Musician("Jen", 25, "Female", "Singing", "Pop");
+            var newActor = new Actor("Eddie Murphy", 54, "Male", "Coming to America", 2017);
+            var newMusician = new Musician("Jen", 25, "Female", "Singing", "Pop");
 
-            if (actor is Performer p1)
+            IsWithPattern();
+            SwitchStatementWithPatterns();
+            void IsWithPattern()
             {
-                Console.WriteLine($"This actor {p1.Name} is a performer.");
-            }
-            else
-            {
-                Console.WriteLine("This actor is not a performer");
-            }
-            if (actor is Musician)
-            {
-                Console.WriteLine("This actor is a musician");
-            }
-            else
-            {
+                // ReSharper disable once PatternAlwaysOfType
+                if (newActor is Performer actorCastedAsPerformer)
+                {
+                    Console.WriteLine($"This actor {actorCastedAsPerformer.Name} is a performer.");
+                }
                 Console.WriteLine("This actor is not a musician");
+            }
+
+            void SwitchStatementWithPatterns()
+            {
+                switch (newMusician)
+                {
+                    // ReSharper disable once PatternAlwaysOfType
+                    case Performer performer when (performer.Age == 33):
+                        Console.WriteLine($"The performer {performer.Name}");
+                        break;
+                    // ReSharper disable once PatternAlwaysOfType
+                    case Musician musician when (musician.Age == 25):
+                        Console.WriteLine($"The performer {musician.Name}");
+                        break;
+                    // ReSharper disable once PatternAlwaysOfType
+                    case Musician _:
+                        Console.WriteLine("The Musician is unknown");
+                        break;
+                    default:
+                        Console.WriteLine("Not Found");
+                        break;
+                    case null:
+                        throw new ArgumentNullException(nameof(newMusician));
+                }
+
             }
         }
     }
