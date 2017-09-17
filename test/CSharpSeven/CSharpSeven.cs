@@ -132,5 +132,39 @@ namespace test.CSharpSeven
 
             }
         }
+
+        public static void RefReturns()
+        {
+            TestRefOutput();
+            TestRefStorage();
+
+            void TestRefOutput()
+            {
+                long total = 0;
+                AddByRef(15, 10, ref total);
+                Console.WriteLine(total);
+
+                void AddByRef(long firstNumber, long secondNumber, ref long totalPointer)
+                {
+                    totalPointer = firstNumber + secondNumber;
+                }
+            }
+
+            void TestRefStorage()
+            {
+                string[] actors = {"Ben Affleck", "Julia Roberts", "Tom Cruise", "Jennifer Lawrence"};
+                const int positionInArray = 2;
+                ref var actor3 = ref new CSharpSeven().FindActor(positionInArray, actors);
+                Console.WriteLine($"Original actor:{actor3}");
+                actor3 = "Dwayne Johnson";
+                Console.WriteLine($"Replacing actor with :{actors[positionInArray]}");
+            }
+        }
+        public ref string FindActor(int index, string[] names)
+        {
+            if (names.Length > 0)
+                return ref names[index];
+            throw new IndexOutOfRangeException($"{nameof(index)} not found.");
+        }
     }
 }

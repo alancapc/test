@@ -30,8 +30,9 @@ namespace test
                 TupleDemo();
                 DeconstructorTuple();
                 Deconstructor();
-                #endregion
                 IsExpressionsWithPatterns();
+                #endregion
+                RefReturns();
             }
             void ConsoleLogThis()
             {
