@@ -60,17 +60,30 @@ namespace test
                     new Blogger{ Firstname = "Sixth", Surname = "Sirname", Age = 20}
                 };
 
-                var groupQuery = bloggers.GroupBy(b => b.Age >= 30);
+                LambdaThenByExample();
 
-                foreach (var grouping in groupQuery)
+                LambdaOrderByExample();
+                LambdaGroupByExample();
+
+                void LambdaGroupByExample()
                 {
-                    Console.WriteLine($"{grouping.Key}");
-                    foreach (var blogger in grouping)
+                    foreach (var grouping in bloggers.GroupBy(b => b.Age))
                     {
-                        Console.WriteLine($" {blogger.Firstname} {blogger.Surname}");
+                        Console.WriteLine($"{grouping.Key}");
+                        foreach (var blogger in grouping)
+                            Console.WriteLine($"{blogger.Firstname} {blogger.Surname}");
                     }
                 }
-
+                void LambdaOrderByExample()
+                {
+                    foreach (var blogger in bloggers.OrderBy(b => b.Age))
+                        Console.WriteLine($"{blogger.Firstname} {blogger.Surname} {blogger.Age}");
+                }
+                void LambdaThenByExample()
+                {
+                    foreach (var blogger in bloggers.OrderBy(b => b.Surname).ThenBy(b => b.Age))
+                        Console.WriteLine($"{blogger.Surname} {blogger.Age} {blogger.Firstname}");
+                }
                 WaitUserInput();
             }
             ConsoleLogThis();
