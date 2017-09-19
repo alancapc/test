@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using test.Models;
 
 namespace test.DataAccess
@@ -12,14 +13,16 @@ namespace test.DataAccess
             {
                 db.Blogs.Add(new Blog { Url = "https://github.com/alancapc/test" });
                 db.Bloggers.Add(new Blogger { Age = 32, Firstname = "Alan", Surname = "Costa"});
-                var removeBlogger = new Blogger{ BloggerId = 1};
-                db.Blogs.RemoveRange(db.Blogs.Where(b => b.BlogId > 0 && b.BlogId < 10));
+                
+                db.Blogs.RemoveRange(db.Blogs.Where(b => b.BlogId > 0));
                 db.Bloggers.RemoveRange(
-                    db.Bloggers.Where(b => b.BloggerId > 0 && b.BloggerId < 10));
+                    db.Bloggers.Where(b => b.BloggerId > 0 ));
+
                 var count = db.SaveChanges();
                 Console.WriteLine($"{count} records saved to database");
 
                 Console.WriteLine();
+
                 Console.WriteLine("All blogs in database:");
                 foreach (var blog in db.Blogs)
                 {
