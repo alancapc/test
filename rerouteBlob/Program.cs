@@ -1,10 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RerouteBlobs.Configurations;
 using RerouteBlobs.Implementations;
 using RerouteBlobs.Interfaces;
+using Serilog;
+using Serilog.Sinks.File;
 
 namespace RerouteBlobs
 {
@@ -28,6 +31,7 @@ namespace RerouteBlobs
             // add configured instance of logging
             serviceCollection.AddSingleton(new LoggerFactory()
                 .AddConsole()
+                .AddSerilog()
                 .AddDebug());
 
             // add logging
@@ -40,6 +44,13 @@ namespace RerouteBlobs
                 .Build();
             serviceCollection.AddOptions();
             serviceCollection.Configure<AzureConfig>(configuration.GetSection("Azure"));
+
+            // Initialize serilog logger
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File($"C:/logs/RerouteBlobs.log")
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .CreateLogger();
 
             // add services
             serviceCollection.AddTransient<IBlobService, BlobService>();

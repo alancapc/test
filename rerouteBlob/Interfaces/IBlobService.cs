@@ -1,8 +1,10 @@
-﻿namespace RerouteBlobs.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace RerouteBlobs.Interfaces
 {
     public interface IBlobService
     {
-        void Run();
+        Task Run();
 
         void MoveBlobInSameStorageAccountAsync();
     }

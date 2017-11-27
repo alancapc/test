@@ -29,7 +29,6 @@ namespace RerouteBlobs
             // add provisional services here if you wish
             _logger.LogInformation( "Starting Blob Service..." );
 
-            _blobService.MoveBlobInSameStorageAccountAsync();
             _blobService.Run();
 
             System.Console.ReadKey();
