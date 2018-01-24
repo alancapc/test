@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  aspnetcorewebapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"

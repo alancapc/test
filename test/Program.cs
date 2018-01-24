@@ -1,7 +1,9 @@
 ﻿using System;
-using static test.Utilities;
-using static test.CSharpSeven;
+using static test.Utilities.Utilities;
 using static test.CSharpTwo.CSharpTwo;
+using static test.CSharpSeven.CSharpSeven;
+using static test.DataAccess.DataAccess;
+using static test.LINQwithCSharp.LinQwithCSharp;
 
 namespace test
 {
@@ -9,6 +11,7 @@ namespace test
     {
         private static void Main()
         {
+            #region ClassesExamples
             void UtilitiesExamples()
             {
                 Console.WriteLine(GetUserProfile());
@@ -19,8 +22,10 @@ namespace test
                 IteratorEvenNumbers(1, 10);
                 IteratorDaysOfTheWeek();
             }
+            #endregion
             void CSharpSevenExamples()
             {
+                #region Passed
                 BinaryLiterals();
                 LocalFunctions();
                 LocalFunctionsRecursion();
@@ -28,14 +33,28 @@ namespace test
                 TupleDemo();
                 DeconstructorTuple();
                 Deconstructor();
+                IsExpressionsWithPatterns();
+                RefReturns();
+                OutVariable();
+                #endregion
+            }
+            void LinQwithCSharp()
+            {
+                LambdaThenByExample();
+                LambdaOrderByExample();
+                LambdaGroupByExample();
             }
             void ConsoleLogThis()
             {
-                CSharpSevenExamples();
-                CSharpTwoExamples();
-                Console.Clear();
-
+                #region Cleared
                 UtilitiesExamples();
+                CSharpTwoExamples();
+                CSharpSevenExamples();
+                AddBlogToDb();
+                Console.Clear();
+                #endregion
+                LinQwithCSharp();
+
                 WaitUserInput();
             }
             ConsoleLogThis();

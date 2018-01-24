@@ -56,7 +56,7 @@
     assembly_version: '{version}'
     assembly_file_version: '{version}'
     assembly_informational_version: '{version}'
-    file: test.*
+    file: test.sln
     patch: true
 
   configuration: Release
