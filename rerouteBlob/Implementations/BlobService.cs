@@ -29,10 +29,10 @@ namespace RerouteBlobs.Implementations
         {
             _logger.LogInformation($"Azure Storage Connection String: {_azureConfig.StorageConnectionString}");
 
-            MoveBlobInSameStorageAccountAsync();
+            await MoveBlobInSameStorageAccountAsync();
         }
 
-        public async void MoveBlobInSameStorageAccountAsync()
+        public async Task MoveBlobInSameStorageAccountAsync()
         {
             BlobContinuationToken token = null;
             do
@@ -51,7 +51,7 @@ namespace RerouteBlobs.Implementations
                     {
                         CloudBlockBlob blob = (CloudBlockBlob)item;
                         
-                        var applicantId = blob.Name.Substring(0, 1);
+                        var applicantId = blob.Name.Substring(0, blob.Name.IndexOf("-")); // todo 
                         if (!ApplicantIds.Contains(applicantId))
                         {
                             ApplicantIds.Add(applicantId);

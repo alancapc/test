@@ -6,6 +6,8 @@ namespace RerouteBlobs.Interfaces
     {
         Task Run();
 
-        void MoveBlobInSameStorageAccountAsync();
+        Task MoveBlobInSameStorageAccountAsync();
+
+        Task CreateNBlobsOf500KbAsync(int numbeOfBlobsToCreate);
     }
 }
