@@ -29,6 +29,7 @@
 
   build:
     parallel: true
+    project: test.sln
     
   test:
     assemblies:
@@ -69,6 +70,7 @@
 
   build:
     parallel: true
+    project: test.sln
     
   test:
     assemblies:
