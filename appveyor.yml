@@ -3,7 +3,7 @@
     only:
       - master
   
-  version: 0.3.3
+  version: 0.3.4
   
   skip_tags: true
 
@@ -43,7 +43,7 @@
     except:
       - master
   
-  version: 0.3.3.{build}-{branch}
+  version: 0.3.4.{build}-{branch}
   
   skip_tags: true
 
