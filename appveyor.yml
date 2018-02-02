@@ -3,7 +3,7 @@
     only:
       - master
   
-  version: 0.2.0
+  version: 0.2.1
   
   skip_tags: true
 
@@ -42,7 +42,7 @@
     except:
       - master
   
-  version: 0.0.2.{build}-{branch}
+  version: 0.2.1.{build}-{branch}
   
   skip_tags: true
 
@@ -56,7 +56,7 @@
     assembly_version: '{version}'
     assembly_file_version: '{version}'
     assembly_informational_version: '{version}'
-    file: test.sln
+    file: test.*
     patch: true
 
   configuration: Release
