@@ -3,7 +3,7 @@
     only:
       - master
   
-  version: 0.3.2
+  version: 0.3.3
   
   skip_tags: true
 
@@ -29,6 +29,7 @@
 
   build:
     parallel: true
+    project: test.sln
     
   test:
     assemblies:
@@ -42,7 +43,7 @@
     except:
       - master
   
-  version: 0.3.2.{build}-{branch}
+  version: 0.3.3.{build}-{branch}
   
   skip_tags: true
 
@@ -69,6 +70,7 @@
 
   build:
     parallel: true
+    project: test.sln
     
   test:
     assemblies:
