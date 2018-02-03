@@ -52,17 +52,22 @@ namespace test
                 ThreadLockExample();
                 ThreadArgumentsExample();
             }
+            // Step1: Declare TopicExamples() method here
             void ConsoleLogThis()
             {
                 #region Cleared
+                // Step3: Move TopicExamples() method into cleared region (i.e. below)
                 UtilitiesExamples();
                 CSharpTwoExamples();
                 CSharpSevenExamples();
                 AddBlogToDb();
                 LinQwithCSharp();
+                Threading();
                 Console.Clear();
                 #endregion
-                Threading();
+
+                // Step2: Call TopicExamples() method below
+
                 WaitUserInput();
             }
             ConsoleLogThis();
