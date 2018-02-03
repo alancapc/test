@@ -4,6 +4,7 @@ using static test.CSharpTwo.CSharpTwo;
 using static test.CSharpSeven.CSharpSeven;
 using static test.DataAccess.DataAccess;
 using static test.LINQwithCSharp.LinQwithCSharp;
+using static test.Threads.Threading;
 
 namespace test
 {
@@ -44,6 +45,13 @@ namespace test
                 LambdaOrderByExample();
                 LambdaGroupByExample();
             }
+            void Threading()
+            {
+                ThreadExample();
+                ThreadSleepExample();
+                ThreadLockExample();
+                ThreadArgumentsExample();
+            }
             void ConsoleLogThis()
             {
                 #region Cleared
@@ -51,10 +59,10 @@ namespace test
                 CSharpTwoExamples();
                 CSharpSevenExamples();
                 AddBlogToDb();
+                LinQwithCSharp();
                 Console.Clear();
                 #endregion
-                LinQwithCSharp();
-
+                Threading();
                 WaitUserInput();
             }
             ConsoleLogThis();
