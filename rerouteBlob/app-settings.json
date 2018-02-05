@@ -3,7 +3,7 @@
     "Title": "Pioneer Console Boilerplate"
   },
   "Azure": {
-    "StorageConnectionString": "UseDevelopmentStorage=true",
-    "ImagesContainerName":  "applicantdocuments"
+    "StorageConnectionString": "Duplicates/Update_Framework",
+    "ImagesContainerName": "crm-applicantdocuments"
   }
 }
