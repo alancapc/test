@@ -1,9 +1,0 @@
-﻿{
-  "Configuration": {
-    "Title": "Pioneer Console Boilerplate"
-  },
-  "Azure": {
-    "StorageConnectionString": "Duplicates/Update_Framework",
-    "ImagesContainerName": "crm-applicantdocuments"
-  }
-}

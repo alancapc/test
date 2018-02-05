@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "test\test.csproj", "{EA4AB4A3-53D6-4A62-B4A7-BD7999C5C744}"
 EndProject
@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApi", "TodoApi\TodoApi.csproj", "{9270C35F-20CD-4AE0-8554-6A86CCE7EDC5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RerouteBlobs", "rerouteBlob\RerouteBlobs.csproj", "{8470BC9B-FD57-4CE9-AA75-441066A97B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +28,6 @@ Global
 		{9270C35F-20CD-4AE0-8554-6A86CCE7EDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9270C35F-20CD-4AE0-8554-6A86CCE7EDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9270C35F-20CD-4AE0-8554-6A86CCE7EDC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8470BC9B-FD57-4CE9-AA75-441066A97B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8470BC9B-FD57-4CE9-AA75-441066A97B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8470BC9B-FD57-4CE9-AA75-441066A97B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8470BC9B-FD57-4CE9-AA75-441066A97B46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
