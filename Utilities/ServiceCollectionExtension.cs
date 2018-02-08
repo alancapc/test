@@ -2,7 +2,7 @@
 
 namespace Utilities
 {
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddUtilitiesConnector(this IServiceCollection services)
         {

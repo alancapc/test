@@ -3,7 +3,7 @@ using test.Threads;
 
 namespace test
 {
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddInternalServices(this IServiceCollection services)
         {
