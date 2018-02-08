@@ -1,21 +1,30 @@
 ﻿using System;
-using static test.Utilities.Utilities;
+using Utilities;
+using test.Threads;
+using Microsoft.Extensions.DependencyInjection;
 using static test.CSharpTwo.CSharpTwo;
 using static test.CSharpSeven.CSharpSeven;
 using static test.DataAccess.DataAccess;
 using static test.LINQwithCSharp.LinQwithCSharp;
-using static test.Threads.Threading;
 
 namespace test
 {
-    internal class Program
+    public class Program
     {
         private static void Main()
         {
+            var services = new ServiceCollection();
+            services.AddInternalServices();
+            services.AddUtilitiesConnector();
+
+            var provider = services.BuildServiceProvider();
+            var utility = provider.GetService<IUtility>();
+            var threading = provider.GetService<IThreading>();
+
             #region ClassesExamples
             void UtilitiesExamples()
             {
-                Console.WriteLine(GetUserProfile());
+                Console.WriteLine(utility.GetUserProfile());
                 Console.WriteLine($"\"{DateTime.Now}\"");
             }
             void CSharpTwoExamples()
@@ -47,10 +56,10 @@ namespace test
             }
             void Threading()
             {
-                ThreadExample();
-                ThreadSleepExample();
-                ThreadLockExample();
-                ThreadArgumentsExample();
+                threading.ThreadExample();
+                threading.ThreadSleepExample();
+                threading.ThreadLockExample();
+                threading.ThreadArgumentsExample();
             }
             // Step1: Declare TopicExamples() method here
             void ConsoleLogThis()
@@ -60,15 +69,15 @@ namespace test
                 UtilitiesExamples();
                 CSharpTwoExamples();
                 CSharpSevenExamples();
-                AddBlogToDb();
-                LinQwithCSharp();
+                //AddBlogToDb();
+                //LinQwithCSharp();
                 Threading();
                 Console.Clear();
                 #endregion
 
                 // Step2: Call TopicExamples() method below
 
-                WaitUserInput();
+                utility.WaitUserInput();
             }
             ConsoleLogThis();
         }

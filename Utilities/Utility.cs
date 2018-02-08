@@ -1,15 +1,16 @@
 ﻿using System;
 using System.IO;
 
-namespace test.Utilities
+namespace Utilities
 {
-    public class Utilities
+    public class Utility : IUtility
     {
-        public static string GetUserProfile()
+        string IUtility.GetUserProfile()
         {
             return Path.GetFileName(Environment.GetEnvironmentVariable("USERPROFILE"));
         }
-        public static void WaitUserInput()
+
+        void IUtility.WaitUserInput()
         {
             Console.WriteLine("Pres any key to leave...");
             do

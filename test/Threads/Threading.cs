@@ -1,9 +1,10 @@
 ﻿namespace test.Threads
 {
     using System.Threading;
-    public class Threading
+
+    public class Threading : IThreading
     {
-        public static void ThreadExample()
+        public void ThreadExample()
         {
             Thread myThread = new Thread(Print0);
 
@@ -28,7 +29,7 @@
             }
         }
 
-        public static void ThreadSleepExample()
+        public void ThreadSleepExample()
         {
             var number = 1;
             for (int i = 0; i < 10; i++)
@@ -40,7 +41,7 @@
             System.Console.WriteLine("Thread ends");
         }
 
-        public static void ThreadLockExample()
+        public void ThreadLockExample()
         {
             BankAccount bankAccount = new BankAccount(10);
             Thread[] threads = new Thread[15];
@@ -65,7 +66,7 @@
             System.Console.WriteLine($"Thread {Thread.CurrentThread.Name} ending.");
         }
 
-        public static void ThreadArgumentsExample()
+        public void ThreadArgumentsExample()
         {
             Thread t = new Thread(() => CountTo(15));
             t.Start();
@@ -82,39 +83,6 @@
                     System.Console.WriteLine(i);
                 }
             }
-        }
-    }
-
-    public class BankAccount
-    {
-        private object accountLock = new object();
-        double Balance { get; set; }
-
-        public BankAccount(double bal)
-        {
-            Balance = bal;
-        }
-        public double Withdraw(double ammount)
-        {
-            if ((Balance - ammount) < 0)
-            {
-                System.Console.WriteLine($"Sorry {Balance} in Account");
-                return Balance;
-            }
-
-            lock (accountLock)
-            {
-                if (Balance >= ammount)
-                {
-                    System.Console.WriteLine($"Removed {ammount} and {(Balance - ammount)} left in Account");
-                    Balance -= ammount;
-                }
-                return Balance;
-            }
-        }
-        public void IssueWithdraw()
-        {
-            Withdraw(1);
         }
     }
 }
