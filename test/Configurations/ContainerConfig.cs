@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using test.Interfaces;
 
 namespace test.Configurations
 {
@@ -31,9 +32,9 @@ namespace test.Configurations
 
             var builder = new ContainerBuilder();
 
+            builder.RegisterLogger(Log.Logger);
             builder.Populate(services);
             builder.RegisterType<Application>().As<IApplication>();
-            builder.RegisterLogger(Log.Logger);
             // add other registrations here...
 
             return builder.Build();

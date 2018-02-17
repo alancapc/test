@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Serilog;
 using static Utilities.CmsDbContext;
+
 
 namespace Utilities
 {
     public class InitialiseLookups : IInitialiseLookups
     {
+
+        private readonly ILogger _logger;
+        public InitialiseLookups(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public void GetInsertFromFile(string line, List<string> inserts)
         {
             if (line.Contains("INSERT [dbo].[") && line.Contains("] ("))
@@ -132,7 +141,6 @@ namespace Utilities
                     listOfValues.Add(separatedvalue);
                 }
 
-
                 var insertValues = Tuple.Create(tableName, listOfValues);
                 values.Add(insertValues);
                 
@@ -156,11 +164,13 @@ namespace Utilities
                 {
                     try
                     {
+                        files.Add(fullFileName);
                         File.Create(fullFileName).Dispose();
+                        _logger.Information($"{fullFileName} created");
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        _logger.Information(e.ToString());
                         throw;
                     }
                     seed++;
@@ -169,7 +179,7 @@ namespace Utilities
                     {
                         try
                         {
-                            streamWriter.WriteLine($"{value.Item2}");
+                            streamWriter.WriteLine($"-- Initialise {value.Item1} Lookup Table");
                         }
                         catch (Exception e)
                         {
@@ -177,6 +187,129 @@ namespace Utilities
                             throw;
                         }
                     }
+                }
+            }
+        }
+
+        public void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> tables, List<Tuple<string, List<string>>> values, List<string> files, List<string> inserts)
+        {
+            foreach (var file in files)
+            {
+                //get table and values
+                var tableToUse = tables.First(tbl => file.Contains(tbl.Item1)).Item1;
+                var table = tableToUse;
+                var tempTable = $"#{table}";
+
+                // step 1 create temp table to host the data 
+                using (var streamWriter = File.AppendText(file))
+                {
+                    try
+                    {
+                        streamWriter.WriteLine("\n--step 1 create temp table to host the data");
+                        streamWriter.WriteLine($"IF OBJECT_ID('tempdb..{tempTable}') IS NOT NULL DROP TABLE {tempTable}");
+                        streamWriter.WriteLine($"GO");
+                        streamWriter.WriteLine($"SELECT TOP 0 * INTO {tempTable} from [dbo].[{table}] SELECT * FROM {tempTable}");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+
+                //step 2 insert data into temp table
+                IEnumerable<string> tempInserts = inserts.Where(insert => insert.Contains(table));
+                IList<string> enumerable = tempInserts as IList<string> ?? tempInserts.ToList();
+                var finalInserts = new List<string>();
+                foreach (string tempInsert in enumerable)
+                {
+                    var finalInsert = tempInsert.Replace("INSERT [dbo].[", "INSERT [#");
+                    finalInserts.Add(finalInsert);
+                }
+                using (var streamWriter = File.AppendText(file))
+                {
+                    try
+                    {
+                        streamWriter.WriteLine("\n--step 2 insert data into temp table");
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} ON");
+                        foreach (var tempInsert in finalInserts)
+                        {
+                            streamWriter.WriteLine($"{tempInsert}");
+                        }
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} OFF");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+
+                /* //step 3 if record in temp table doesn't exist in table, insert data in table
+                    SET IDENTITY_INSERT dbo.RouteTypeLookup ON
+                    MERGE dbo.RouteTypeLookup AS T
+                    USING #RouteTypeLookup AS S
+                    ON T.[Key] = S.[Key]
+                    WHEN NOT MATCHED BY TARGET 
+                      THEN INSERT ([Key], [ShortText], [LongText], [RecordValid]) VALUES (S.[Key], S.ShortText, S.LongText, S.RecordValid);
+                    SET IDENTITY_INSERT dbo.RouteTypeLookup OFF
+                 */
+                using (var streamWriter = File.AppendText(file))
+                {
+                    try
+                    {
+                        streamWriter.WriteLine("\n--step 3 if record in temp table doesn\'t exist in table, insert data in table");
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT dbo.{table} ON");
+
+                        streamWriter.WriteLine($"MERGE dbo.{table} AS T");
+                        streamWriter.WriteLine($"USING {tempTable} AS S");
+                        streamWriter.WriteLine($"ON T.<key> = S.<key>");
+                        streamWriter.WriteLine($"WHEN NOT MATCHED BY TARGET");
+                        streamWriter.WriteLine($"THEN INSERT (" + /* COLUMNS */ ") VALUES (" + /* S.COLUMNS*/ ");" );
+
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT dbo.{table} OFF");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public void CreatePostDeploymentScript(List<string> files)
+        {
+            DirectoryInfo directory = Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/Lookups");
+            var postDeploymentScript = $"{directory.FullName}/Script.PostDeployment.sql";
+            try
+            {
+                File.Create(postDeploymentScript).Dispose();
+                _logger.Information($"{postDeploymentScript} created");
+            }
+            catch (Exception e)
+            {
+                _logger.Information(e.ToString());
+                throw;
+            }
+
+            var header = "/*\r\nPost-Deployment Script Template\r\n--------------------------------------------------------------------------------------\r\n This file contains SQL statements that will be appended to the build script.\r\n Use SQLCMD syntax to include a file in the post-deployment script.\r\n Example:      :r .\\myfile.sql\r\n Use SQLCMD syntax to reference a variable in the post-deployment script.\r\n Example:      :setvar TableName MyTable\r\n               SELECT * FROM [$(TableName)]\r\n--------------------------------------------------------------------------------------\r\n*/";
+
+
+            using (var streamWriter = File.AppendText(postDeploymentScript))
+            {
+                try
+                {
+                    streamWriter.WriteLine(header);
+                    foreach (var file in files)
+                    {
+                        streamWriter.WriteLine($" :r .\\{file}");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
                 }
             }
         }

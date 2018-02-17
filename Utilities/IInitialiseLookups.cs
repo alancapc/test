@@ -11,5 +11,7 @@ namespace Utilities
 
         void GetValuesFromInserts(List<string> inserts, List<Tuple<string, List<string>>> values);
         void CreateInitialiseLookupSqlFiles(List<Tuple<string, List<string>>> values, List<string> files);
+        void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> postDeploymentTables, List<Tuple<string, List<string>>> postDeploymentValues, List<string> deploymentFiles, List<string> postDeploymentFiles);
+        void CreatePostDeploymentScript(List<string> postDeploymentFiles);
     }
 }

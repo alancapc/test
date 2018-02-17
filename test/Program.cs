@@ -1,7 +1,7 @@
-﻿using test.Configurations;
-
-namespace test
+﻿namespace test
 {
+    using Configurations;
+    using Interfaces;
     using Autofac;
     using Utilities;
     using Autofac.Extensions.DependencyInjection;

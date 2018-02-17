@@ -1,5 +1,5 @@
 ﻿{
   "Serilog": {
-    "LoggerFilePath": "c:/logs/test/"
+    "LoggerFilePath": "c:/logs/PostDeployment.log"
   }
 }
