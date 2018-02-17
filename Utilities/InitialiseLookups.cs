@@ -201,13 +201,19 @@ namespace Utilities
                 var columns = tableToUse.Item2;
                 var fieldNames = new List<string>();
                 var sourceFieldNames = new List<string>();
+                var updates = new List<string>();
                 foreach (var column in columns)
                 {
                     fieldNames.Add($"[{column.FieldName}]");
-                    sourceFieldNames.Add($"S.[.{column.FieldName}]");
+                    sourceFieldNames.Add($"S.[{column.FieldName}]");
+                }
+                foreach (var column in columns.Skip(1))
+                {
+                    updates.Add($"[T].[{column.FieldName}] = [S].[{column.FieldName}]\n  ");
                 }
                 string finalColumns = string.Join(",", fieldNames);
                 string finalSourceColumns = string.Join(",", sourceFieldNames);
+                string finalUpdates = string.Join(",", updates);
                 var tempTable = $"#{table}";
 
                 // step 1 create temp table to host the data 
@@ -267,8 +273,15 @@ namespace Utilities
                         streamWriter.WriteLine($"MERGE [dbo].[{table}] AS T");
                         streamWriter.WriteLine($"USING {tempTable} AS S");
                         streamWriter.WriteLine($"ON T.[{columns[0].FieldName}] = S.[{columns[0].FieldName}]");
+
                         streamWriter.WriteLine($"WHEN NOT MATCHED BY TARGET");
-                        streamWriter.WriteLine($"THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} );" );
+                        streamWriter.WriteLine($"  THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} )");
+
+                        streamWriter.WriteLine($"WHEN MATCHED \n THEN UPDATE SET");
+                        streamWriter.WriteLine($"  {finalUpdates}");
+
+
+                        streamWriter.WriteLine($"WHEN NOT MATCHED BY SOURCE \n  THEN DELETE;");
 
                         streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] OFF");
                     }
