@@ -196,8 +196,18 @@ namespace Utilities
             foreach (var file in files)
             {
                 //get table and values
-                var tableToUse = tables.First(tbl => file.Contains(tbl.Item1)).Item1;
-                var table = tableToUse;
+                var tableToUse = tables.First(tbl => file.Contains(tbl.Item1));
+                var table = tableToUse.Item1;
+                var columns = tableToUse.Item2;
+                var fieldNames = new List<string>();
+                var sourceFieldNames = new List<string>();
+                foreach (var column in columns)
+                {
+                    fieldNames.Add($"[{column.FieldName}]");
+                    sourceFieldNames.Add($"S.[.{column.FieldName}]");
+                }
+                string finalColumns = string.Join(",", fieldNames);
+                string finalSourceColumns = string.Join(",", sourceFieldNames);
                 var tempTable = $"#{table}";
 
                 // step 1 create temp table to host the data 
@@ -245,29 +255,22 @@ namespace Utilities
                     }
                 }
 
-                /* //step 3 if record in temp table doesn't exist in table, insert data in table
-                    SET IDENTITY_INSERT dbo.RouteTypeLookup ON
-                    MERGE dbo.RouteTypeLookup AS T
-                    USING #RouteTypeLookup AS S
-                    ON T.[Key] = S.[Key]
-                    WHEN NOT MATCHED BY TARGET 
-                      THEN INSERT ([Key], [ShortText], [LongText], [RecordValid]) VALUES (S.[Key], S.ShortText, S.LongText, S.RecordValid);
-                    SET IDENTITY_INSERT dbo.RouteTypeLookup OFF
-                 */
+                //step 3 if record in temp table doesn't exist in table, insert data in table
+
                 using (var streamWriter = File.AppendText(file))
                 {
                     try
                     {
                         streamWriter.WriteLine("\n--step 3 if record in temp table doesn\'t exist in table, insert data in table");
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT dbo.{table} ON");
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] ON");
 
-                        streamWriter.WriteLine($"MERGE dbo.{table} AS T");
+                        streamWriter.WriteLine($"MERGE [dbo].[{table}] AS T");
                         streamWriter.WriteLine($"USING {tempTable} AS S");
-                        streamWriter.WriteLine($"ON T.<key> = S.<key>");
+                        streamWriter.WriteLine($"ON T.[{columns[0].FieldName}] = S.[{columns[0].FieldName}]");
                         streamWriter.WriteLine($"WHEN NOT MATCHED BY TARGET");
-                        streamWriter.WriteLine($"THEN INSERT (" + /* COLUMNS */ ") VALUES (" + /* S.COLUMNS*/ ");" );
+                        streamWriter.WriteLine($"THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} );" );
 
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT dbo.{table} OFF");
+                        streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] OFF");
                     }
                     catch (Exception e)
                     {
