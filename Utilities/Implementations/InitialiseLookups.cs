@@ -1,27 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Serilog;
-using static Utilities.CmsDbContext;
-
-
-namespace Utilities
+﻿namespace Utilities.Implementations
 {
+    using Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Serilog;
+    using Model;
+
     public class InitialiseLookups : IInitialiseLookups
     {
-
         private readonly ILogger _logger;
+
         public InitialiseLookups(ILogger logger)
         {
             _logger = logger;
         }
 
-        public void GetInsertFromFile(string line, List<string> inserts)
+        public void GeneratePostDeploymentScripts()
+        {
+            var postDeployment = new PostDeployment();
+
+            GetInsertsFromFile(postDeployment.DataFile, postDeployment.Inserts);
+
+            GetIdentitiesFromDataFile(postDeployment.DataFile, postDeployment.Identities);
+
+            GetValuesFromInserts(postDeployment.Inserts, postDeployment.Values);
+
+            GetTableFromInserts(postDeployment.Inserts, postDeployment.Tables);
+
+            CreateInitialiseLookupSqlFiles(postDeployment.Values, postDeployment.Files);
+
+            PopulateInitialiseLookupSqlFiles(postDeployment.Tables, postDeployment.Values, postDeployment.Files, postDeployment.Inserts, postDeployment.Identities);
+
+            CreatePostDeploymentScript(postDeployment.Files);
+        }
+
+        public void GetInsertsFromFile(IEnumerable<string> dataFile, List<string> inserts)
+        {
+            foreach (var line in dataFile)
+            {
+                GetInsertFromDataFile(line, inserts);
+            }
+        }
+        public void GetInsertFromDataFile(string line, List<string> inserts)
         {
             if (line.Contains("INSERT [dbo].[") && line.Contains("] ("))
             {
                 inserts.Add(line);
+            }
+        }
+        public void GetIdentitiesFromDataFile(IEnumerable<string> dataFile, List<string> identities)
+        {
+            foreach (var line in dataFile)
+            {
+                if (line.Contains("SET IDENTITY_INSERT") && line.Contains("ON"))
+                {
+                    identities.Add(line);
+                }
             }
         }
 
@@ -38,7 +74,7 @@ namespace Utilities
                     var myTypeSignature = tableName;
 
                     var myListOfFields = new List<Field>();
-                    var columns = GetTableColumnsAndTypes(tableName);
+                    var columns = CmsDbContext.GetTableColumnsAndTypes(tableName);
                     foreach (var tableColumn in columns)
                     {
                         var fieldType = MapSqlTypeToCSharpType(tableColumn.Item2);
@@ -123,7 +159,6 @@ namespace Utilities
                 }
             }
         }
-
         public void GetValuesFromInserts(List<string> inserts, List<Tuple<string, List<string>>> values)
         {
             foreach (var insert in inserts)
@@ -190,8 +225,7 @@ namespace Utilities
                 }
             }
         }
-
-        public void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> tables, List<Tuple<string, List<string>>> values, List<string> files, List<string> inserts)
+        public void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> tables, List<Tuple<string, List<string>>> values, List<string> files, List<string> inserts, List<string> identities)
         {
             foreach (var file in files)
             {
@@ -247,12 +281,22 @@ namespace Utilities
                     try
                     {
                         streamWriter.WriteLine("\n--step 2 insert data into temp table");
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} ON");
-                        foreach (var tempInsert in finalInserts)
+                        if (identities.Any(identity => identity.Contains(table)))
                         {
-                            streamWriter.WriteLine($"{tempInsert}");
+                            streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} ON");
+                            foreach (var tempInsert in finalInserts)
+                            {
+                                streamWriter.WriteLine($"{tempInsert}");
+                            }
+                            streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} OFF");
                         }
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} OFF");
+                        else
+                        {
+                            foreach (var tempInsert in finalInserts)
+                            {
+                                streamWriter.WriteLine($"{tempInsert}");
+                            }
+                        }
                     }
                     catch (Exception e)
                     {
@@ -262,28 +306,32 @@ namespace Utilities
                 }
 
                 //step 3 if record in temp table doesn't exist in table, insert data in table
-
                 using (var streamWriter = File.AppendText(file))
                 {
                     try
                     {
                         streamWriter.WriteLine("\n--step 3 if record in temp table doesn\'t exist in table, insert data in table");
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] ON");
-
+                        if (identities.Any(identity => identity.Contains(table)))
+                        {
+                            streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] ON");
+                        }
                         streamWriter.WriteLine($"MERGE [dbo].[{table}] AS T");
                         streamWriter.WriteLine($"USING {tempTable} AS S");
-                        streamWriter.WriteLine($"ON T.[{columns[0].FieldName}] = S.[{columns[0].FieldName}]");
+                        streamWriter.WriteLine($"ON T.[{columns[0].FieldName}] = S.[{columns[0].FieldName}]\n");
 
                         streamWriter.WriteLine($"WHEN NOT MATCHED BY TARGET");
-                        streamWriter.WriteLine($"  THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} )");
+                        streamWriter.WriteLine($"  THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} )\n");
 
-                        streamWriter.WriteLine($"WHEN MATCHED \n THEN UPDATE SET");
+                        streamWriter.WriteLine($"WHEN MATCHED \n  THEN UPDATE SET");
                         streamWriter.WriteLine($"  {finalUpdates}");
 
 
                         streamWriter.WriteLine($"WHEN NOT MATCHED BY SOURCE \n  THEN DELETE;");
 
-                        streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] OFF");
+                        if (identities.Any(identity => identity.Contains(table)))
+                        {
+                            streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] OFF");
+                        }
                     }
                     catch (Exception e)
                     {
@@ -319,7 +367,7 @@ namespace Utilities
                     streamWriter.WriteLine(header);
                     foreach (var file in files)
                     {
-                        streamWriter.WriteLine($" :r .\\{file}");
+                        streamWriter.WriteLine($" :r .\\{Path.GetFileName(file)}");
                     }
                 }
                 catch (Exception e)

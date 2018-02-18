@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using test.Interfaces;
-
-namespace test.Configurations
+﻿namespace test.Configurations
 {
     using System.IO;
     using Autofac;
@@ -10,7 +7,8 @@ namespace test.Configurations
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Serilog;
-
+    using Microsoft.Extensions.Options;
+    using Interfaces;
     public static class ContainerConfig
     {
         public static IContainer Configure(ServiceCollection services)
@@ -21,6 +19,7 @@ namespace test.Configurations
                 .Build();
             services.AddOptions();
             services.Configure<SerilogConfig>(configuration.GetSection("Serilog"));
+            services.Configure<SourceConfig>(configuration.GetSection("Source"));
             var serviceProvider = services.BuildServiceProvider();
             var serilogConfig = serviceProvider.GetService<IOptions<SerilogConfig>>();
 

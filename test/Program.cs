@@ -1,4 +1,6 @@
-﻿namespace test
+﻿using Microsoft.Extensions.Options;
+
+namespace test
 {
     using Configurations;
     using Interfaces;

@@ -1,5 +1,8 @@
 ﻿{
   "Serilog": {
     "LoggerFilePath": "c:/logs/PostDeployment.log"
-  }
+  },
+  "Source": {
+    "DataFilePath": "/data.txt"
+  } 
 }

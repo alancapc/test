@@ -1,8 +1,9 @@
-﻿using System;
-using System.IO;
-
-namespace Utilities
+﻿namespace Utilities.Implementations
 {
+    using System;
+    using System.IO;
+    using Interfaces;
+
     public class Utility : IUtility
     {
         string IUtility.GetUserProfile()

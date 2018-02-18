@@ -3,10 +3,11 @@
     using Serilog;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Reflection;
     using Utilities;
     using Interfaces;
+    using Utilities.Interfaces;
+
     public class Application : IApplication
     {
         private readonly ILogger _logger;
@@ -22,33 +23,11 @@
 
         public void Run()
         {
-            var postDeployment = new PostDeployment();
+            _initlInitialiseLookups.GeneratePostDeploymentScripts();
 
-            GetInsertsFromFile(_initlInitialiseLookups, postDeployment.Inserts);
-
-            _initlInitialiseLookups.GetValuesFromInserts(postDeployment.Inserts, postDeployment.Values);
-
-            _initlInitialiseLookups.GetTableFromInserts(postDeployment.Inserts, postDeployment.Tables);
-
-            _initlInitialiseLookups.CreateInitialiseLookupSqlFiles(postDeployment.Values, postDeployment.Files);
-
-            _initlInitialiseLookups.PopulateInitialiseLookupSqlFiles(postDeployment.Tables, postDeployment.Values,
-                postDeployment.Files, postDeployment.Inserts);
-
-            _initlInitialiseLookups.CreatePostDeploymentScript(postDeployment.Files);
             //CreateObjectsFromTables(postDeployment.Tables, postDeployment.TableObjects);
 
             _utility.WaitUserInput();
-        }
-
-        private static void GetInsertsFromFile(IInitialiseLookups initialiseLookups, List<string> inserts)
-        {
-            IEnumerable<string> dataFile = File.ReadLines(Directory.GetCurrentDirectory() + "/data.txt");
-
-            foreach (var line in dataFile)
-            {
-                initialiseLookups.GetInsertFromFile(line, inserts);
-            }
         }
 
         private static void CreateObjectsFromTables(List<Tuple<string, List<Field>>> tables, List<object> tableObjects)
