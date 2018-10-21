@@ -1,4 +1,4 @@
-﻿namespace test.Threads
+﻿namespace Examples.Threads
 {
     using System.Threading;
 

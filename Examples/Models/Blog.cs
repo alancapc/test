@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace test.Models
+namespace Examples.Models
 {
     public class Blog
     {

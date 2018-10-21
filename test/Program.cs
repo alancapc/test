@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace test
+﻿namespace test
 {
     using Configurations;
     using Interfaces;
     using Autofac;
     using Utilities;
+    using Examples;
     using Autofac.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +29,7 @@ namespace test
             services.AddAutofac();
             services.AddInternalServices();
             services.AddUtilitiesConnector();
+            services.AddExamplesConnector();
         }
     }
 }

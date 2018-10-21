@@ -2,16 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using test.Models;
+using Examples.Models;
 
-namespace test.Migrations
+namespace Examples.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20170917140305_AddingBloggersTable")]
-    partial class AddingBloggersTable
+    class BloggingContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,14 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using test.Models;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using System;
+using Examples;
+using Examples.Models;
 
-namespace test.Migrations
+namespace Examples.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    class BloggingContextModelSnapshot : ModelSnapshot
+    [Migration("20170917135200_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,22 +32,6 @@ namespace test.Migrations
                     b.HasKey("BlogId");
 
                     b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("test.Blogger", b =>
-                {
-                    b.Property<int>("BloggerId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Age");
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Surname");
-
-                    b.HasKey("BloggerId");
-
-                    b.ToTable("Bloggers");
                 });
 
             modelBuilder.Entity("test.Post", b =>

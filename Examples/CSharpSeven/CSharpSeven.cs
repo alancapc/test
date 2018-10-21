@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace test.CSharpSeven
+namespace Examples.CSharpSeven
 {
     public class CSharpSeven
     {

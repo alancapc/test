@@ -3,17 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
-using System;
-using test;
-using test.Models;
+using Examples.Models;
 
-namespace test.Migrations
+namespace Examples.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20170917135200_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20170917140305_AddingBloggersTable")]
+    partial class AddingBloggersTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +28,22 @@ namespace test.Migrations
                     b.HasKey("BlogId");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("test.Blogger", b =>
+                {
+                    b.Property<int>("BloggerId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Age");
+
+                    b.Property<string>("Firstname");
+
+                    b.Property<string>("Surname");
+
+                    b.HasKey("BloggerId");
+
+                    b.ToTable("Bloggers");
                 });
 
             modelBuilder.Entity("test.Post", b =>

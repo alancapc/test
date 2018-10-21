@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace test.CSharpTwo
+namespace Examples.CSharpTwo
 {
     public class DaysOfTheWeek : IEnumerable
     {

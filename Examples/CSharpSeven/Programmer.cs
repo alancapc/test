@@ -1,6 +1,6 @@
-﻿namespace test.CSharpSeven
+﻿namespace Examples.CSharpSeven
 {
-    internal class Programmer
+    public class Programmer
     {
         public string FirstName { get; }
         public string Lastname { get; }

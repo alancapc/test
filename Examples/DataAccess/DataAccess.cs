@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using test.Models;
+using Examples.Models;
 
-namespace test.DataAccess
+namespace Examples.DataAccess
 {
     public class DataAccess
     {

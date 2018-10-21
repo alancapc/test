@@ -1,4 +1,4 @@
-namespace test.Models
+namespace Examples.Models
 {
     public class Post
     {

@@ -1,6 +1,6 @@
-﻿namespace test.CSharpSeven
+﻿namespace Examples.CSharpSeven
 {
-    internal class TupleSamples
+    public class TupleSamples
     {
         public (string name, string title, long year) GetNewTuple()
         {

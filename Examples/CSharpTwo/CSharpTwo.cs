@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace test.CSharpTwo
+namespace Examples.CSharpTwo
 {
     public class CSharpTwo
     {

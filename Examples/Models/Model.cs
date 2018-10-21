@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace test.Models
+namespace Examples.Models
 {
     public class BloggingContext : DbContext
     {

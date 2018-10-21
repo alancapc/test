@@ -1,4 +1,4 @@
-namespace test.Threads
+namespace Examples.Threads
 {
     public class BankAccount : IBankAccount
     {

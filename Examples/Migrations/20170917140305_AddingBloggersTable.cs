@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace test.Migrations
+namespace Examples.Migrations
 {
     public partial class AddingBloggersTable : Migration
     {

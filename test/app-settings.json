@@ -3,6 +3,6 @@
     "LoggerFilePath": "c:/logs/PostDeployment.log"
   },
   "Source": {
-    "DataFilePath": "/data.txt"
+    "DataFilePath": "../Utilities/data.txt"
   } 
 }

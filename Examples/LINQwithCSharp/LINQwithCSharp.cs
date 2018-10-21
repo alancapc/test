@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using test.Models;
+using Examples.Models;
 
-namespace test.LINQwithCSharp
+namespace Examples.LINQwithCSharp
 {
     public class LinQwithCSharp
     {
