@@ -8,7 +8,7 @@ builds, deployments, multiple configurations, source control, debugging, project
 
 ## Getting Started
 
-Please, use Visual Studio 2017 and dotnet.
+Please, use Visual Studio 2017 and .NETCore.
 
 ### Prerequisites
 

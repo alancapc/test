@@ -1,63 +1,35 @@
-﻿using System;
-using static test.Utilities.Utilities;
-using static test.CSharpTwo.CSharpTwo;
-using static test.CSharpSeven.CSharpSeven;
-using static test.DataAccess.DataAccess;
-using static test.LINQwithCSharp.LinQwithCSharp;
-
-namespace test
+﻿namespace test
 {
-    internal class Program
+    using Configurations;
+    using Interfaces;
+    using Autofac;
+    using Utilities;
+    using Examples;
+    using Autofac.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection;
+
+    public class Program
     {
         private static void Main()
         {
-            #region ClassesExamples
-            void UtilitiesExamples()
-            {
-                Console.WriteLine(GetUserProfile());
-                Console.WriteLine($"\"{DateTime.Now}\"");
-            }
-            void CSharpTwoExamples()
-            {
-                IteratorEvenNumbers(1, 10);
-                IteratorDaysOfTheWeek();
-            }
-            #endregion
-            void CSharpSevenExamples()
-            {
-                #region Passed
-                BinaryLiterals();
-                LocalFunctions();
-                LocalFunctionsRecursion();
-                TupleValueTupleReturn();
-                TupleDemo();
-                DeconstructorTuple();
-                Deconstructor();
-                IsExpressionsWithPatterns();
-                RefReturns();
-                OutVariable();
-                #endregion
-            }
-            void LinQwithCSharp()
-            {
-                LambdaThenByExample();
-                LambdaOrderByExample();
-                LambdaGroupByExample();
-            }
-            void ConsoleLogThis()
-            {
-                #region Cleared
-                UtilitiesExamples();
-                CSharpTwoExamples();
-                CSharpSevenExamples();
-                AddBlogToDb();
-                Console.Clear();
-                #endregion
-                LinQwithCSharp();
+            var services = new ServiceCollection();
 
-                WaitUserInput();
+            ConfigureServices(services);
+
+            var container = ContainerConfig.Configure(services);
+            using (var scope = container.BeginLifetimeScope())
+            {
+                var app = scope.Resolve<IApplication>();
+                app.Run();
             }
-            ConsoleLogThis();
+        }
+
+        public static void ConfigureServices(IServiceCollection services )
+        {
+            services.AddAutofac();
+            services.AddInternalServices();
+            services.AddUtilitiesConnector();
+            services.AddExamplesConnector();
         }
     }
 }
