@@ -1,4 +1,6 @@
-﻿namespace Examples
+﻿using Examples.Json;
+
+namespace Examples
 {
     using Microsoft.Extensions.DependencyInjection;
     using Threads;

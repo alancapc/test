@@ -1,4 +1,4 @@
-﻿namespace Examples
+﻿namespace Examples.Json
 {
     public interface IJson
     {
