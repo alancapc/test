@@ -6,7 +6,7 @@ namespace Examples.CSharpTwo
     {
         public static void IteratorEvenNumbers(int first, int last)
         {
-            foreach (int number in EvenSequenceIterator(first, last))
+            foreach (var number in EvenSequenceIterator(first, last))
                 Console.Write(number + " ");
 
             System.Collections.Generic.IEnumerable<int>

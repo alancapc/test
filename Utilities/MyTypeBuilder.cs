@@ -17,28 +17,28 @@ namespace Utilities
         public static object CreateNewObject(string myTypeSignature, List<Field> myListOfFields)
         {
             var myType = CompileResultType(myTypeSignature, myListOfFields);
-            object myObject = Activator.CreateInstance(myType);
+            var myObject = Activator.CreateInstance(myType);
 
             return myObject;
         }
         public static Type CompileResultType(string myTypeSignature, List<Field> listOfFields)
         {
-            TypeBuilder tb = GetTypeBuilder(myTypeSignature);
-            ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
+            var tb = GetTypeBuilder(myTypeSignature);
+            var constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
            
             foreach (var field in listOfFields)
                 CreateProperty(tb, field.FieldName, field.FieldType);
 
-            Type objectType = tb.CreateType();
+            var objectType = tb.CreateType();
             return objectType;
         }
 
         private static TypeBuilder GetTypeBuilder(string myTypeSignature)
         {
             var an = new AssemblyName(myTypeSignature);
-            AssemblyBuilder assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(an, AssemblyBuilderAccess.Run);
-            ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule("MainModule");
-            TypeBuilder tb = moduleBuilder.DefineType(myTypeSignature,
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(an, AssemblyBuilderAccess.Run);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("MainModule");
+            var tb = moduleBuilder.DefineType(myTypeSignature,
                 TypeAttributes.Public |
                 TypeAttributes.Class |
                 TypeAttributes.AutoClass |
@@ -51,26 +51,26 @@ namespace Utilities
 
         private static void CreateProperty(TypeBuilder tb, string propertyName, Type propertyType)
         {
-            FieldBuilder fieldBuilder = tb.DefineField("_" + propertyName, propertyType, FieldAttributes.Private);
+            var fieldBuilder = tb.DefineField("_" + propertyName, propertyType, FieldAttributes.Private);
 
-            PropertyBuilder propertyBuilder = tb.DefineProperty(propertyName, PropertyAttributes.HasDefault, propertyType, null);
-            MethodBuilder getPropMthdBldr = tb.DefineMethod("get_" + propertyName, MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, propertyType, Type.EmptyTypes);
-            ILGenerator getIl = getPropMthdBldr.GetILGenerator();
+            var propertyBuilder = tb.DefineProperty(propertyName, PropertyAttributes.HasDefault, propertyType, null);
+            var getPropMthdBldr = tb.DefineMethod("get_" + propertyName, MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, propertyType, Type.EmptyTypes);
+            var getIl = getPropMthdBldr.GetILGenerator();
 
             getIl.Emit(OpCodes.Ldarg_0);
             getIl.Emit(OpCodes.Ldfld, fieldBuilder);
             getIl.Emit(OpCodes.Ret);
 
-            MethodBuilder setPropMthdBldr =
+            var setPropMthdBldr =
                 tb.DefineMethod("set_" + propertyName,
                     MethodAttributes.Public |
                     MethodAttributes.SpecialName |
                     MethodAttributes.HideBySig,
                     null, new[] { propertyType });
 
-            ILGenerator setIl = setPropMthdBldr.GetILGenerator();
-            Label modifyProperty = setIl.DefineLabel();
-            Label exitSet = setIl.DefineLabel();
+            var setIl = setPropMthdBldr.GetILGenerator();
+            var modifyProperty = setIl.DefineLabel();
+            var exitSet = setIl.DefineLabel();
 
             setIl.MarkLabel(modifyProperty);
             setIl.Emit(OpCodes.Ldarg_0);
