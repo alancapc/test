@@ -7,7 +7,7 @@
   
   skip_tags: true
 
-  image: Visual Studio 2017
+  image: Visual Studio 2019 Preview
       
   init:
   - git config --global core.autocrlf input
@@ -47,12 +47,11 @@
   
   skip_tags: true
 
-  image: Visual Studio 2017
+  image: Visual Studio 2019 Preview
       
   init:
     - git config --global core.autocrlf input
 
-  
   assembly_info:
     assembly_version: '{version}'
     assembly_file_version: '{version}'
@@ -71,6 +70,7 @@
   build:
     parallel: true
     project: test.sln
+    verbosity: normal
     
   test:
     assemblies:
@@ -78,3 +78,9 @@
   
   on_failure:
     - ps: Update-AppveyorBuild -Version "$($Env:APPVEYOR_BUILD_VERSION)-fail"
+
+  notifications:
+-   provider: GitHubPullRequest
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
