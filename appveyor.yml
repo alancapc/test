@@ -79,8 +79,8 @@
   on_failure:
     - ps: Update-AppveyorBuild -Version "$($Env:APPVEYOR_BUILD_VERSION)-fail"
 
-  notifications:
--   provider: GitHubPullRequest
-    on_build_success: true
-    on_build_failure: true
-    on_build_status_changed: true
+notifications:
+- provider: GitHubPullRequest
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
