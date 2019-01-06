@@ -1,4 +1,6 @@
-﻿namespace Examples
+﻿using Examples.Json;
+
+namespace Examples
 {
     using Microsoft.Extensions.DependencyInjection;
     using Threads;
@@ -9,6 +11,7 @@
         {
             services.AddTransient<IThreading, Threading>();
             services.AddTransient<IBankAccount, BankAccount>();
+            services.AddTransient<IJson, Json.Json>();
             return services;
         }
     }

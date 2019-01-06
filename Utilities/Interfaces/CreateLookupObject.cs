@@ -21,9 +21,9 @@
 
             Console.WriteLine($"Type: {myObject.GetType()}");
 
-            foreach (PropertyInfo prop in props)
+            foreach (var prop in props)
             {
-                object propValue = prop.GetValue(myObject, null);
+                var propValue = prop.GetValue(myObject, null);
                 Console.WriteLine($"  Property Name: {prop.Name}\t Property Type: {prop.PropertyType}\n  Property Value: {propValue}");
             }
         }

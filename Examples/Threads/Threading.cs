@@ -6,7 +6,7 @@
     {
         public void ThreadExample()
         {
-            Thread myThread = new Thread(Print0);
+            var myThread = new Thread(Print0);
 
             myThread.Start();
 
@@ -14,7 +14,7 @@
 
             void Print1()
             {
-                for (int i = 0; i < 1000; i++)
+                for (var i = 0; i < 1000; i++)
                 {
                     System.Console.Write(1);
                 }
@@ -22,7 +22,7 @@
 
             void Print0()
             {
-                for (int i = 0; i < 1000; i++)
+                for (var i = 0; i < 1000; i++)
                 {
                     System.Console.Write(0);
                 }
@@ -32,7 +32,7 @@
         public void ThreadSleepExample()
         {
             var number = 1;
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 System.Console.WriteLine(number);
                 Thread.Sleep(1000);
@@ -43,18 +43,18 @@
 
         public void ThreadLockExample()
         {
-            BankAccount bankAccount = new BankAccount(10);
-            Thread[] threads = new Thread[15];
+            var bankAccount = new BankAccount(10);
+            var threads = new Thread[15];
             Thread.CurrentThread.Name = "main";
 
-            for (int i = 0; i < 15; i++)
+            for (var i = 0; i < 15; i++)
             {
-                Thread t = new Thread(new ThreadStart(bankAccount.IssueWithdraw));
+                var t = new Thread(new ThreadStart(bankAccount.IssueWithdraw));
                 t.Name = i.ToString();
                 threads[i] = t;
             }
 
-            for (int i = 0; i < 15; i++)
+            for (var i = 0; i < 15; i++)
             {
                 System.Console.WriteLine($"Thread {threads[i].Name} Alive: {threads[i].IsAlive}");
                 threads[i].Start();
@@ -68,7 +68,7 @@
 
         public void ThreadArgumentsExample()
         {
-            Thread t = new Thread(() => CountTo(15));
+            var t = new Thread(() => CountTo(15));
             t.Start();
 
             new Thread(() => {
@@ -78,7 +78,7 @@
 
             void CountTo(int maxNum)
             {
-                for (int i = 0; i < maxNum; i++)
+                for (var i = 0; i < maxNum; i++)
                 {
                     System.Console.WriteLine(i);
                 }

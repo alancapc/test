@@ -65,8 +65,8 @@
         {
             foreach (var insert in inserts)
             {
-                int pFrom = insert.IndexOf("INSERT [dbo].[", StringComparison.Ordinal) + "INSERT [dbo].[".Length;
-                int pTo = insert.LastIndexOf("] (", StringComparison.Ordinal);
+                var pFrom = insert.IndexOf("INSERT [dbo].[", StringComparison.Ordinal) + "INSERT [dbo].[".Length;
+                var pTo = insert.LastIndexOf("] (", StringComparison.Ordinal);
                 var tableName = insert.Substring(pFrom, pTo - pFrom);
 
                 if (!tables.Any(tbl => tbl.Item1.Contains(tableName)))
@@ -163,14 +163,14 @@
         {
             foreach (var insert in inserts)
             {
-                int pFrom = insert.IndexOf("INSERT [dbo].[", StringComparison.Ordinal) + "INSERT [dbo].[".Length;
-                int pTo = insert.LastIndexOf("] (", StringComparison.Ordinal);
+                var pFrom = insert.IndexOf("INSERT [dbo].[", StringComparison.Ordinal) + "INSERT [dbo].[".Length;
+                var pTo = insert.LastIndexOf("] (", StringComparison.Ordinal);
                 var tableName = insert.Substring(pFrom, pTo - pFrom);
 
                 var rawValues = insert.Split('(', ')')[3];
 
-                string[] separatedvalues = rawValues.Split(",");
-                List<string> listOfValues = new List<string>();
+                var separatedvalues = rawValues.Split(",");
+                var listOfValues = new List<string>();
                 foreach (var separatedvalue in separatedvalues)
                 {
                     listOfValues.Add(separatedvalue);
@@ -194,7 +194,7 @@
             {
                 if (directory == null) continue;
                 var fullFileName = $"{directory.FullName}/{seed}.Initialise{value.Item1}.sql";
-                bool fileExists = Directory.EnumerateFiles($"{directory.FullName}").Any(f => f.Contains($"Initialise{value.Item1}.sql"));
+                var fileExists = Directory.EnumerateFiles($"{directory.FullName}").Any(f => f.Contains($"Initialise{value.Item1}.sql"));
                 if (!fileExists)
                 {
                     try
@@ -245,9 +245,9 @@
                 {
                     updates.Add($"[T].[{column.FieldName}] = [S].[{column.FieldName}]\n  ");
                 }
-                string finalColumns = string.Join(",", fieldNames);
-                string finalSourceColumns = string.Join(",", sourceFieldNames);
-                string finalUpdates = string.Join(",", updates);
+                var finalColumns = string.Join(",", fieldNames);
+                var finalSourceColumns = string.Join(",", sourceFieldNames);
+                var finalUpdates = string.Join(",", updates);
                 var tempTable = $"#{table}";
 
                 // step 1 create temp table to host the data 
@@ -268,10 +268,10 @@
                 }
 
                 //step 2 insert data into temp table
-                IEnumerable<string> tempInserts = inserts.Where(insert => insert.Contains(table));
-                IList<string> enumerable = tempInserts as IList<string> ?? tempInserts.ToList();
+                var tempInserts = inserts.Where(insert => insert.Contains(table));
+                var enumerable = tempInserts as IList<string> ?? tempInserts.ToList();
                 var finalInserts = new List<string>();
-                foreach (string tempInsert in enumerable)
+                foreach (var tempInsert in enumerable)
                 {
                     var finalInsert = tempInsert.Replace("INSERT [dbo].[", "INSERT [#");
                     finalInserts.Add(finalInsert);
@@ -344,7 +344,7 @@
 
         public void CreatePostDeploymentScript(List<string> files)
         {
-            DirectoryInfo directory = Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/Lookups");
+            var directory = Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/Lookups");
             var postDeploymentScript = $"{directory.FullName}/Script.PostDeployment.sql";
             try
             {

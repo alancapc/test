@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  aspnetcorewebapi:
-    image: aspnetcorewebapi
-    build:
-      context: ./Aspnetcorewebapi
-      dockerfile: Dockerfile
