@@ -1,13 +1,11 @@
 ﻿using Examples;
-using Examples.Json;
+using Serilog;
+using test.Interfaces;
+using Utilities.Interfaces;
+using Examples.Threads;
 
 namespace test
 {
-    using Serilog;
-    using Interfaces;
-    using Utilities.Interfaces;
-    using Examples.Threads;
-
     public class Application : IApplication
     {
         private readonly ILogger _logger;
@@ -15,21 +13,23 @@ namespace test
         private readonly IThreading _threading;
         private readonly IJson _json;
         private readonly IInitialiseLookups _initlInitialiseLookups;
+        private readonly ICSharpEight _cSharpEight;
 
-        public Application(ILogger logger, IUtility utility, IThreading threading, IInitialiseLookups initlInitialiseLookups, IJson json)
+        public Application(ILogger logger, IUtility utility, IThreading threading, IInitialiseLookups initlInitialiseLookups, IJson json, ICSharpEight cSharpEight)
         {
             _logger = logger;
             _utility = utility;
             _threading = threading;
             _initlInitialiseLookups = initlInitialiseLookups;
             _json = json;
+            _cSharpEight = cSharpEight;
         }
 
         public void Run()
         {
             //_initlInitialiseLookups.GeneratePostDeploymentScripts();
 
-            _json.DeserialiseJson();
+            _cSharpEight.NullableReferenceTypes();
             _utility.WaitUserInput();
         }
     }

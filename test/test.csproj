@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <Company>greatfella</Company>
     <Authors>devs</Authors>
     <Description>test project</Description>
@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/alancapc/test</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <StartupObject>test.Program</StartupObject>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="tasks.json" />

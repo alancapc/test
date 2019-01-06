@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Examples.CSharpEight
+﻿namespace Examples
 {
-    interface ICSharpEight
+    public interface ICSharpEight
     {
         void NullableReferenceTypes();
 

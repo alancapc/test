@@ -1,17 +1,16 @@
-﻿using Examples.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Examples.Threads;
 
 namespace Examples
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Threads;
-
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddExamplesConnector(this IServiceCollection services)
         {
             services.AddTransient<IThreading, Threading>();
             services.AddTransient<IBankAccount, BankAccount>();
-            services.AddTransient<IJson, Json.Json>();
+            services.AddTransient<IJson, Json>();
+            services.AddTransient<ICSharpEight, CSharpEight>();
             return services;
         }
     }

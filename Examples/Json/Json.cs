@@ -3,7 +3,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Examples.Json
+namespace Examples
 {
     class Json : IJson
     {
