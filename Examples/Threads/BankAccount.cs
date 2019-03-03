@@ -4,7 +4,7 @@ namespace Examples.Threads
 {
     public class BankAccount : IBankAccount
     {
-        private readonly object accountLock = new object();
+        private readonly object _accountLock = new object();
 
         public BankAccount(double bal)
         {
@@ -13,20 +13,20 @@ namespace Examples.Threads
 
         private double Balance { get; set; }
 
-        public double Withdraw(double ammount)
+        public double Withdraw(double amount)
         {
-            if (Balance - ammount < 0)
+            if (Balance - amount < 0)
             {
                 Console.WriteLine($"Sorry {Balance} in Account");
                 return Balance;
             }
 
-            lock (accountLock)
+            lock (_accountLock)
             {
-                if (Balance >= ammount)
+                if (Balance >= amount)
                 {
-                    Console.WriteLine($"Removed {ammount} and {Balance - ammount} left in Account");
-                    Balance -= ammount;
+                    Console.WriteLine($"Removed {amount} and {Balance - amount} left in Account");
+                    Balance -= amount;
                 }
 
                 return Balance;

@@ -1,4 +1,4 @@
-﻿using Examples.Json;
+﻿using Examples.DesignPatterns.Factory;
 using test.Interfaces;
 using Utilities.Interfaces;
 
@@ -6,20 +6,19 @@ namespace test
 {
     public class Application : IApplication
     {
-        private readonly IJson _json;
         private readonly IUtility _utility;
+        private readonly IFactoryDemo _factoryDemo;
 
-        public Application(IUtility utility, IJson json)
+        public Application(IUtility utility, IFactoryDemo factoryDemo)
         {
             _utility = utility;
-            _json = json;
+            _factoryDemo = factoryDemo;
         }
 
         public void Run()
         {
-            //_initlInitialiseLookups.GeneratePostDeploymentScripts();
+            _factoryDemo.DemonstrateFactory();
 
-            _json.DeserialiseJson();
             _utility.WaitUserInput();
         }
     }

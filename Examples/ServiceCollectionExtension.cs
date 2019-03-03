@@ -1,5 +1,4 @@
-﻿using Examples.Json;
-using Examples.Threads;
+﻿using Examples.DesignPatterns.Factory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples
@@ -8,9 +7,9 @@ namespace Examples
     {
         public static IServiceCollection AddExamplesConnector(this IServiceCollection services)
         {
-            services.AddTransient<IThreading, Threading>();
-            services.AddTransient<IBankAccount, BankAccount>();
-            services.AddTransient<IJson, Json.Json>();
+            services.AddSingleton<IPersonFactory, PersonFactory>();
+            services.AddSingleton<IFactoryDemo, FactoryDemo>();
+
             return services;
         }
     }

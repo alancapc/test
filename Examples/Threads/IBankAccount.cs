@@ -3,6 +3,6 @@
     public interface IBankAccount
     {
         void IssueWithdraw();
-        double Withdraw(double ammount);
+        double Withdraw(double amount);
     }
 }
