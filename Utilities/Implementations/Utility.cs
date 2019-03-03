@@ -1,9 +1,9 @@
-﻿namespace Utilities.Implementations
-{
-    using System;
-    using System.IO;
-    using Interfaces;
+﻿using System;
+using System.IO;
+using Utilities.Interfaces;
 
+namespace Utilities.Implementations
+{
     public class Utility : IUtility
     {
         string IUtility.GetUserProfile()
@@ -16,7 +16,9 @@
             Console.WriteLine("Pres any key to leave...");
             do
             {
-                while (!Console.KeyAvailable) { }
+                while (!Console.KeyAvailable)
+                {
+                }
             } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
     }

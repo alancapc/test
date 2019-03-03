@@ -1,14 +1,15 @@
-﻿namespace test.Configurations
+﻿using System.IO;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutofacSerilogIntegration;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Serilog;
+using test.Interfaces;
+
+namespace test.Configurations
 {
-    using System.IO;
-    using Autofac;
-    using Autofac.Extensions.DependencyInjection;
-    using AutofacSerilogIntegration;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Serilog;
-    using Microsoft.Extensions.Options;
-    using Interfaces;
     public static class ContainerConfig
     {
         public static IContainer Configure(ServiceCollection services)

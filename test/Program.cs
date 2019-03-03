@@ -1,13 +1,13 @@
-﻿namespace test
-{
-    using Configurations;
-    using Interfaces;
-    using Autofac;
-    using Utilities;
-    using Examples;
-    using Autofac.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Examples;
+using Microsoft.Extensions.DependencyInjection;
+using test.Configurations;
+using test.Interfaces;
+using Utilities;
 
+namespace test
+{
     public class Program
     {
         private static void Main()
@@ -24,7 +24,7 @@
             }
         }
 
-        public static void ConfigureServices(IServiceCollection services )
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddAutofac();
             services.AddInternalServices();

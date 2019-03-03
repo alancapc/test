@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,13 +7,13 @@ namespace Utilities
 {
     public class CmsDbContext : DbContext
     {
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=Translink2014_Dev;Integrated Security=True;Application Name=CMS");
+            optionsBuilder.UseSqlServer(
+                "Data Source=.\\SQLEXPRESS;Initial Catalog=Translink2014_Dev;Integrated Security=True;Application Name=CMS");
         }
 
-        public static List<Tuple<string, string>> GetTableColumnsAndTypes(string tableName)
+        public static IEnumerable<Tuple<string, string>> GetTableColumnsAndTypes(string tableName)
         {
             using (var context = new CmsDbContext())
             {
@@ -50,12 +49,12 @@ namespace Utilities
                             var column = Tuple.Create(result.GetString(0), result.GetString(1));
                             tableColumns.Add(column);
                         }
+
                         result.Close();
                         return tableColumns;
                     }
                 }
             }
-
         }
     }
 }

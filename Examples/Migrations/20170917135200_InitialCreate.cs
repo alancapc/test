@@ -12,20 +12,19 @@ namespace Examples.Migrations
                 table => new
                 {
                     BlogId = table.Column<int>("int")
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Url = table.Column<string>("nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Blogs", x => x.BlogId); });
 
             migrationBuilder.CreateTable(
                 "Posts",
                 table => new
                 {
                     PostId = table.Column<int>("int")
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     BlogId = table.Column<int>("int"),
                     Content = table.Column<string>("nvarchar(max)", nullable: true),
                     Title = table.Column<string>("nvarchar(max)", nullable: true)

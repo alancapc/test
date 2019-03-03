@@ -2,14 +2,14 @@
 {
     public class Programmer
     {
-        public string FirstName { get; }
-        public string Lastname { get; }
-
         public Programmer(string firstName, string lastName)
         {
             FirstName = firstName;
             Lastname = lastName;
         }
+
+        public string FirstName { get; }
+        public string Lastname { get; }
 
         public void Deconstruct(out string firstName, out string lastName)
         {

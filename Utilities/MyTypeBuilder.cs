@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -10,22 +7,20 @@ namespace Utilities
 {
     public static class MyTypeBuilder
     {
-        static MyTypeBuilder()
-        {
-            
-        }
-        public static object CreateNewObject(string myTypeSignature, List<Field> myListOfFields)
+        public static object CreateNewObject(string myTypeSignature, IEnumerable<Field> myListOfFields)
         {
             var myType = CompileResultType(myTypeSignature, myListOfFields);
             var myObject = Activator.CreateInstance(myType);
 
             return myObject;
         }
-        public static Type CompileResultType(string myTypeSignature, List<Field> listOfFields)
+
+        private static Type CompileResultType(string myTypeSignature, IEnumerable<Field> listOfFields)
         {
             var tb = GetTypeBuilder(myTypeSignature);
-            var constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
-           
+            tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName |
+                                        MethodAttributes.RTSpecialName);
+
             foreach (var field in listOfFields)
                 CreateProperty(tb, field.FieldName, field.FieldType);
 
@@ -54,7 +49,9 @@ namespace Utilities
             var fieldBuilder = tb.DefineField("_" + propertyName, propertyType, FieldAttributes.Private);
 
             var propertyBuilder = tb.DefineProperty(propertyName, PropertyAttributes.HasDefault, propertyType, null);
-            var getPropMthdBldr = tb.DefineMethod("get_" + propertyName, MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, propertyType, Type.EmptyTypes);
+            var getPropMthdBldr = tb.DefineMethod("get_" + propertyName,
+                MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig, propertyType,
+                Type.EmptyTypes);
             var getIl = getPropMthdBldr.GetILGenerator();
 
             getIl.Emit(OpCodes.Ldarg_0);
@@ -66,7 +63,7 @@ namespace Utilities
                     MethodAttributes.Public |
                     MethodAttributes.SpecialName |
                     MethodAttributes.HideBySig,
-                    null, new[] { propertyType });
+                    null, new[] {propertyType});
 
             var setIl = setPropMthdBldr.GetILGenerator();
             var modifyProperty = setIl.DefineLabel();
@@ -88,10 +85,7 @@ namespace Utilities
 
     public class Field
     {
-        public Type FieldType;
         public string FieldName;
+        public Type FieldType;
     }
-    
-
-    
 }

@@ -1,16 +1,17 @@
-﻿namespace Utilities.Interfaces
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
+namespace Utilities.Interfaces
+{
     public class CreateLookupObject
     {
-        private static void CreateObjectsFromTables(List<Tuple<string, List<Field>>> tables, List<object> tableObjects)
+        private static void CreateObjectsFromTables(IEnumerable<Tuple<string, List<Field>>> tables,
+            ICollection<object> tableObjects)
         {
-            foreach (var table in tables)
+            foreach ((string myTypeSignature, List<Field> fields) in tables)
             {
-                var myObject = MyTypeBuilder.CreateNewObject(table.Item1, table.Item2);
+                var myObject = MyTypeBuilder.CreateNewObject(myTypeSignature, fields);
                 tableObjects.Add(myObject);
             }
         }
@@ -24,7 +25,8 @@
             foreach (var prop in props)
             {
                 var propValue = prop.GetValue(myObject, null);
-                Console.WriteLine($"  Property Name: {prop.Name}\t Property Type: {prop.PropertyType}\n  Property Value: {propValue}");
+                Console.WriteLine(
+                    $"  Property Name: {prop.Name}\t Property Type: {prop.PropertyType}\n  Property Value: {propValue}");
             }
         }
     }

@@ -9,12 +9,12 @@ namespace Examples.LINQwithCSharp
     {
         public static readonly List<Blogger> Bloggers = new List<Blogger>
         {
-            new Blogger{ Firstname = "First", Surname = "Surname", Age = 40},
-            new Blogger{ Firstname = "Second", Surname = "Surname", Age = 35},
-            new Blogger{ Firstname = "Third", Surname = "Surname", Age = 40},
-            new Blogger{ Firstname = "Fourth", Surname = "Sirname", Age = 25},
-            new Blogger{ Firstname = "Fifth", Surname = "Surname", Age = 25},
-            new Blogger{ Firstname = "Sixth", Surname = "Sirname", Age = 20}
+            new Blogger {Firstname = "First", Surname = "Surname", Age = 40},
+            new Blogger {Firstname = "Second", Surname = "Surname", Age = 35},
+            new Blogger {Firstname = "Third", Surname = "Surname", Age = 40},
+            new Blogger {Firstname = "Fourth", Surname = "Sirname", Age = 25},
+            new Blogger {Firstname = "Fifth", Surname = "Surname", Age = 25},
+            new Blogger {Firstname = "Sixth", Surname = "Sirname", Age = 20}
         };
 
         public static void LambdaGroupByExample()

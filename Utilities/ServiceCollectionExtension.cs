@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
-using Utilities.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Utilities.Implementations;
+using Utilities.Interfaces;
 
 namespace Utilities
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Implementations;
-    using Interfaces;
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddUtilitiesConnector(this IServiceCollection services)

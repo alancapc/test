@@ -1,10 +1,9 @@
 ﻿using Examples.Json;
+using Examples.Threads;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Examples
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Threads;
-
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddExamplesConnector(this IServiceCollection services)

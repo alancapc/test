@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Examples.Json
 {
-    class Json : IJson
+    internal class Json : IJson
     {
         public void SerialiseJson()
         {
@@ -27,9 +28,9 @@ namespace Examples.Json
 
         public void DeserialiseJson()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var obj = JsonConvert.DeserializeObject<NewDate>("{ 'MyDate': '2016-03-30T07:02:00+07:00'}",
-                new JsonSerializerSettings()
+                new JsonSerializerSettings
                 {
                     DateParseHandling = DateParseHandling.None
                 });

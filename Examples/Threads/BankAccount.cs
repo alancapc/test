@@ -1,19 +1,23 @@
+using System;
+
 namespace Examples.Threads
 {
     public class BankAccount : IBankAccount
     {
-        private object accountLock = new object();
-        double Balance { get; set; }
+        private readonly object accountLock = new object();
 
         public BankAccount(double bal)
         {
             Balance = bal;
         }
+
+        private double Balance { get; set; }
+
         public double Withdraw(double ammount)
         {
-            if ((Balance - ammount) < 0)
+            if (Balance - ammount < 0)
             {
-                System.Console.WriteLine($"Sorry {Balance} in Account");
+                Console.WriteLine($"Sorry {Balance} in Account");
                 return Balance;
             }
 
@@ -21,12 +25,14 @@ namespace Examples.Threads
             {
                 if (Balance >= ammount)
                 {
-                    System.Console.WriteLine($"Removed {ammount} and {(Balance - ammount)} left in Account");
+                    Console.WriteLine($"Removed {ammount} and {Balance - ammount} left in Account");
                     Balance -= ammount;
                 }
+
                 return Balance;
             }
         }
+
         public void IssueWithdraw()
         {
             Withdraw(1);

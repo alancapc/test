@@ -12,15 +12,13 @@ namespace Examples.Migrations
                 table => new
                 {
                     BloggerId = table.Column<int>("int")
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy",
+                            SqlServerValueGenerationStrategy.IdentityColumn),
                     Age = table.Column<int>("int"),
                     Firstname = table.Column<string>("nvarchar(max)", nullable: true),
                     Surname = table.Column<string>("nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bloggers", x => x.BloggerId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Bloggers", x => x.BloggerId); });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

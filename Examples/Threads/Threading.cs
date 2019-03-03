@@ -1,7 +1,8 @@
-﻿namespace Examples.Threads
-{
-    using System.Threading;
+﻿using System;
+using System.Threading;
 
+namespace Examples.Threads
+{
     public class Threading : IThreading
     {
         public void ThreadExample()
@@ -14,18 +15,12 @@
 
             void Print1()
             {
-                for (var i = 0; i < 1000; i++)
-                {
-                    System.Console.Write(1);
-                }
+                for (var i = 0; i < 1000; i++) Console.Write(1);
             }
 
             void Print0()
             {
-                for (var i = 0; i < 1000; i++)
-                {
-                    System.Console.Write(0);
-                }
+                for (var i = 0; i < 1000; i++) Console.Write(0);
             }
         }
 
@@ -34,11 +29,12 @@
             var number = 1;
             for (var i = 0; i < 10; i++)
             {
-                System.Console.WriteLine(number);
+                Console.WriteLine(number);
                 Thread.Sleep(1000);
                 number++;
             }
-            System.Console.WriteLine("Thread ends");
+
+            Console.WriteLine("Thread ends");
         }
 
         public void ThreadLockExample()
@@ -49,21 +45,20 @@
 
             for (var i = 0; i < 15; i++)
             {
-                var t = new Thread(new ThreadStart(bankAccount.IssueWithdraw));
-                t.Name = i.ToString();
+                var t = new Thread(bankAccount.IssueWithdraw) {Name = i.ToString()};
                 threads[i] = t;
             }
 
             for (var i = 0; i < 15; i++)
             {
-                System.Console.WriteLine($"Thread {threads[i].Name} Alive: {threads[i].IsAlive}");
+                Console.WriteLine($"Thread {threads[i].Name} Alive: {threads[i].IsAlive}");
                 threads[i].Start();
-                System.Console.WriteLine($"Thread {threads[i].Name} Alive: {threads[i].IsAlive}");
+                Console.WriteLine($"Thread {threads[i].Name} Alive: {threads[i].IsAlive}");
             }
 
-            System.Console.WriteLine($"Current Priority : {Thread.CurrentThread.Priority}");
+            Console.WriteLine($"Current Priority : {Thread.CurrentThread.Priority}");
 
-            System.Console.WriteLine($"Thread {Thread.CurrentThread.Name} ending.");
+            Console.WriteLine($"Thread {Thread.CurrentThread.Name} ending.");
         }
 
         public void ThreadArgumentsExample()
@@ -71,17 +66,15 @@
             var t = new Thread(() => CountTo(15));
             t.Start();
 
-            new Thread(() => {
+            new Thread(() =>
+            {
                 CountTo(5);
                 CountTo(6);
             }).Start();
 
             void CountTo(int maxNum)
             {
-                for (var i = 0; i < maxNum; i++)
-                {
-                    System.Console.WriteLine(i);
-                }
+                for (var i = 0; i < maxNum; i++) Console.WriteLine(i);
             }
         }
     }

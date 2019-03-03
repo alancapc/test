@@ -1,13 +1,13 @@
-﻿namespace Utilities.Implementations
-{
-    using Interfaces;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using Serilog;
-    using Model;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Serilog;
+using Utilities.Interfaces;
+using Utilities.Model;
 
+namespace Utilities.Implementations
+{
     public class InitialiseLookups : IInitialiseLookups
     {
         private readonly ILogger _logger;
@@ -31,34 +31,27 @@
 
             CreateInitialiseLookupSqlFiles(postDeployment.Values, postDeployment.Files);
 
-            PopulateInitialiseLookupSqlFiles(postDeployment.Tables, postDeployment.Values, postDeployment.Files, postDeployment.Inserts, postDeployment.Identities);
+            PopulateInitialiseLookupSqlFiles(postDeployment.Tables, postDeployment.Values, postDeployment.Files,
+                postDeployment.Inserts, postDeployment.Identities);
 
             CreatePostDeploymentScript(postDeployment.Files);
         }
 
         public void GetInsertsFromFile(IEnumerable<string> dataFile, List<string> inserts)
         {
-            foreach (var line in dataFile)
-            {
-                GetInsertFromDataFile(line, inserts);
-            }
+            foreach (var line in dataFile) GetInsertFromDataFile(line, inserts);
         }
+
         public void GetInsertFromDataFile(string line, List<string> inserts)
         {
-            if (line.Contains("INSERT [dbo].[") && line.Contains("] ("))
-            {
-                inserts.Add(line);
-            }
+            if (line.Contains("INSERT [dbo].[") && line.Contains("] (")) inserts.Add(line);
         }
+
         public void GetIdentitiesFromDataFile(IEnumerable<string> dataFile, List<string> identities)
         {
             foreach (var line in dataFile)
-            {
                 if (line.Contains("SET IDENTITY_INSERT") && line.Contains("ON"))
-                {
                     identities.Add(line);
-                }
-            }
         }
 
         public void GetTableFromInserts(List<string> inserts, List<Tuple<string, List<Field>>> tables)
@@ -159,6 +152,7 @@
                 }
             }
         }
+
         public void GetValuesFromInserts(List<string> inserts, List<Tuple<string, List<string>>> values)
         {
             foreach (var insert in inserts)
@@ -171,14 +165,10 @@
 
                 var separatedvalues = rawValues.Split(",");
                 var listOfValues = new List<string>();
-                foreach (var separatedvalue in separatedvalues)
-                {
-                    listOfValues.Add(separatedvalue);
-                }
+                foreach (var separatedvalue in separatedvalues) listOfValues.Add(separatedvalue);
 
                 var insertValues = Tuple.Create(tableName, listOfValues);
                 values.Add(insertValues);
-                
             }
         }
 
@@ -187,14 +177,13 @@
             var seed = 500000;
             DirectoryInfo directory = null;
             if (!Directory.Exists($"{Directory.GetCurrentDirectory()}/Lookups"))
-            {
                 directory = Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}/Lookups");
-            }
             foreach (var value in values)
             {
                 if (directory == null) continue;
                 var fullFileName = $"{directory.FullName}/{seed}.Initialise{value.Item1}.sql";
-                var fileExists = Directory.EnumerateFiles($"{directory.FullName}").Any(f => f.Contains($"Initialise{value.Item1}.sql"));
+                var fileExists = Directory.EnumerateFiles($"{directory.FullName}")
+                    .Any(f => f.Contains($"Initialise{value.Item1}.sql"));
                 if (!fileExists)
                 {
                     try
@@ -208,6 +197,7 @@
                         _logger.Information(e.ToString());
                         throw;
                     }
+
                     seed++;
 
                     using (var streamWriter = File.AppendText(fullFileName))
@@ -225,7 +215,9 @@
                 }
             }
         }
-        public void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> tables, List<Tuple<string, List<string>>> values, List<string> files, List<string> inserts, List<string> identities)
+
+        public void PopulateInitialiseLookupSqlFiles(List<Tuple<string, List<Field>>> tables,
+            List<Tuple<string, List<string>>> values, List<string> files, List<string> inserts, List<string> identities)
         {
             foreach (var file in files)
             {
@@ -241,10 +233,9 @@
                     fieldNames.Add($"[{column.FieldName}]");
                     sourceFieldNames.Add($"S.[{column.FieldName}]");
                 }
+
                 foreach (var column in columns.Skip(1))
-                {
                     updates.Add($"[T].[{column.FieldName}] = [S].[{column.FieldName}]\n  ");
-                }
                 var finalColumns = string.Join(",", fieldNames);
                 var finalSourceColumns = string.Join(",", sourceFieldNames);
                 var finalUpdates = string.Join(",", updates);
@@ -256,9 +247,11 @@
                     try
                     {
                         streamWriter.WriteLine("\n--step 1 create temp table to host the data");
-                        streamWriter.WriteLine($"IF OBJECT_ID('tempdb..{tempTable}') IS NOT NULL DROP TABLE {tempTable}");
-                        streamWriter.WriteLine($"GO");
-                        streamWriter.WriteLine($"SELECT TOP 0 * INTO {tempTable} from [dbo].[{table}] SELECT * FROM {tempTable}");
+                        streamWriter.WriteLine(
+                            $"IF OBJECT_ID('tempdb..{tempTable}') IS NOT NULL DROP TABLE {tempTable}");
+                        streamWriter.WriteLine("GO");
+                        streamWriter.WriteLine(
+                            $"SELECT TOP 0 * INTO {tempTable} from [dbo].[{table}] SELECT * FROM {tempTable}");
                     }
                     catch (Exception e)
                     {
@@ -276,6 +269,7 @@
                     var finalInsert = tempInsert.Replace("INSERT [dbo].[", "INSERT [#");
                     finalInserts.Add(finalInsert);
                 }
+
                 using (var streamWriter = File.AppendText(file))
                 {
                     try
@@ -284,18 +278,12 @@
                         if (identities.Any(identity => identity.Contains(table)))
                         {
                             streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} ON");
-                            foreach (var tempInsert in finalInserts)
-                            {
-                                streamWriter.WriteLine($"{tempInsert}");
-                            }
+                            foreach (var tempInsert in finalInserts) streamWriter.WriteLine($"{tempInsert}");
                             streamWriter.WriteLine($"SET IDENTITY_INSERT {tempTable} OFF");
                         }
                         else
                         {
-                            foreach (var tempInsert in finalInserts)
-                            {
-                                streamWriter.WriteLine($"{tempInsert}");
-                            }
+                            foreach (var tempInsert in finalInserts) streamWriter.WriteLine($"{tempInsert}");
                         }
                     }
                     catch (Exception e)
@@ -310,28 +298,25 @@
                 {
                     try
                     {
-                        streamWriter.WriteLine("\n--step 3 if record in temp table doesn\'t exist in table, insert data in table");
+                        streamWriter.WriteLine(
+                            "\n--step 3 if record in temp table doesn\'t exist in table, insert data in table");
                         if (identities.Any(identity => identity.Contains(table)))
-                        {
                             streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] ON");
-                        }
                         streamWriter.WriteLine($"MERGE [dbo].[{table}] AS T");
                         streamWriter.WriteLine($"USING {tempTable} AS S");
                         streamWriter.WriteLine($"ON T.[{columns[0].FieldName}] = S.[{columns[0].FieldName}]\n");
 
-                        streamWriter.WriteLine($"WHEN NOT MATCHED BY TARGET");
+                        streamWriter.WriteLine("WHEN NOT MATCHED BY TARGET");
                         streamWriter.WriteLine($"  THEN INSERT ( {finalColumns} ) VALUES ( {finalSourceColumns} )\n");
 
-                        streamWriter.WriteLine($"WHEN MATCHED \n  THEN UPDATE SET");
+                        streamWriter.WriteLine("WHEN MATCHED \n  THEN UPDATE SET");
                         streamWriter.WriteLine($"  {finalUpdates}");
 
 
-                        streamWriter.WriteLine($"WHEN NOT MATCHED BY SOURCE \n  THEN DELETE;");
+                        streamWriter.WriteLine("WHEN NOT MATCHED BY SOURCE \n  THEN DELETE;");
 
                         if (identities.Any(identity => identity.Contains(table)))
-                        {
                             streamWriter.WriteLine($"SET IDENTITY_INSERT [dbo].[{table}] OFF");
-                        }
                     }
                     catch (Exception e)
                     {
@@ -357,7 +342,8 @@
                 throw;
             }
 
-            var header = "/*\r\nPost-Deployment Script Template\r\n--------------------------------------------------------------------------------------\r\n This file contains SQL statements that will be appended to the build script.\r\n Use SQLCMD syntax to include a file in the post-deployment script.\r\n Example:      :r .\\myfile.sql\r\n Use SQLCMD syntax to reference a variable in the post-deployment script.\r\n Example:      :setvar TableName MyTable\r\n               SELECT * FROM [$(TableName)]\r\n--------------------------------------------------------------------------------------\r\n*/";
+            var header =
+                "/*\r\nPost-Deployment Script Template\r\n--------------------------------------------------------------------------------------\r\n This file contains SQL statements that will be appended to the build script.\r\n Use SQLCMD syntax to include a file in the post-deployment script.\r\n Example:      :r .\\myfile.sql\r\n Use SQLCMD syntax to reference a variable in the post-deployment script.\r\n Example:      :setvar TableName MyTable\r\n               SELECT * FROM [$(TableName)]\r\n--------------------------------------------------------------------------------------\r\n*/";
 
 
             using (var streamWriter = File.AppendText(postDeploymentScript))
@@ -365,10 +351,7 @@
                 try
                 {
                     streamWriter.WriteLine(header);
-                    foreach (var file in files)
-                    {
-                        streamWriter.WriteLine($" :r .\\{Path.GetFileName(file)}");
-                    }
+                    foreach (var file in files) streamWriter.WriteLine($" :r .\\{Path.GetFileName(file)}");
                 }
                 catch (Exception e)
                 {
