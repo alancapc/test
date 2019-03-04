@@ -3,6 +3,7 @@
     public enum PersonType
     {
         Rural,
-        Urban
+        Urban,
+        Metropolitan
     }
 }

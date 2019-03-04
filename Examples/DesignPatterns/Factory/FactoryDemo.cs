@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Examples.DesignPatterns.Factory
 {
     public class FactoryDemo : IFactoryDemo
     {
         private readonly IPersonFactory _personFactory;
-        private readonly List<IPerson> _persons = new List<IPerson>();
 
         public FactoryDemo(IPersonFactory personFactory)
         {
@@ -15,10 +13,10 @@ namespace Examples.DesignPatterns.Factory
 
         public void DemonstrateFactory()
         {
-            _persons.Add(_personFactory.GetPerson(PersonType.Rural));
-            _persons.Add(_personFactory.GetPerson(PersonType.Urban));
-
-            foreach (var person in _persons) Console.WriteLine(person.GetName());
+            foreach (var personType in Enum.GetValues(typeof(PersonType)))
+            {
+                Console.WriteLine(_personFactory.GetPerson((PersonType)personType).GetName());
+            }
         }
     }
 }

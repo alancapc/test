@@ -1,4 +1,4 @@
-﻿namespace Examples.DesignPatterns.Factory
+﻿namespace Examples.DesignPatterns.Factory.Persons
 {
     public class Rural : IPerson
     {

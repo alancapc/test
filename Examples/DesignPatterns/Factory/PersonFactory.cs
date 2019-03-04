@@ -1,4 +1,5 @@
 ﻿using System;
+using Examples.DesignPatterns.Factory.Persons;
 
 namespace Examples.DesignPatterns.Factory
 {
@@ -12,6 +13,8 @@ namespace Examples.DesignPatterns.Factory
                     return new Rural();
                 case PersonType.Urban:
                     return new Urban();
+                case PersonType.Metropolitan:
+                    return new Metropolitan();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(personType), personType, null);
             }
